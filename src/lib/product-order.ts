@@ -1,0 +1,126 @@
+export const productOrderMap: { [key: string]: number } = {
+  'PRIORITA ADULTO': 1,
+  'PRIORITA ADULTO RAÇAS GRANDES': 1,
+  'PRIORITA MINI ADULTO': 2,
+  'PRIORITA ADULTO RAÇAS PEQUENAS': 2,
+  'PRIORITA JUNIOR': 3,
+  'PRIORITA SUPER PREMIUM JUNIOR RAÇAS MÉDIAS E GRANDES': 3,
+  'PRIORITA MINI JUNIOR': 4,
+  'PRIORITA SUPER PREMIUM MINI JUNIOR': 4,
+  'PRIORITA GATOS ADULTOS CASTRADOS': 5,
+
+  'MIKDOG PREMIUM ESPECIAL MÉDIO E GRANDE PORTE': 6,
+  'MIKDOG PREMIUM ESPECIAL ADULTO MÉDIO E GRANDE PORTE': 6,
+  'MIKDOG PREMIUM ESPECIAL PEQUENO PORTE': 7,
+  'MIKDOG PREMIUM ESPECIAL ADULTO PEQUENO PORTE': 7,
+  'MIKDOG PREMIUM ESPECIAL FILHOTES': 8,
+  'MIKDOG PREMIUM ESPECIAL FILHOTE': 8,
+  'MIKDOG PREMIUM ESPECIAL REFEIÇÃO TODO DIA': 9,
+  'MIKDOG PREMIUM ESPECIAL ADULTO REFEIÇÃO TODO DIA': 9,
+  'MIKDOG PREMIUM ESPECIAL REFEIÇÕES': 9,
+
+  'MIKCAT PREMIUM ESPECIAL GATOS CASTRADOS': 10,
+  'MIKCAT PREMIUM ESPECIAL CASTRADOS': 10,
+  'MIKCAT PREMIUM ESPECIAL ADULTO CASTRADO': 10,
+  'MIKCAT PREMIUM ESPECIAL GATOS ADULTOS': 11,
+  'MIKCAT PREMIUM ESPECIAL ADULTO': 11,
+  'MIKCAT PREMIUM ESPECIAL GATOS FILHOTES': 12,
+  'MIKCAT PREMIUM ESPECIAL FILHOTES': 12,
+  'MIKCAT PREMIUM ESPECIAL FILHOTE': 12,
+
+  'MIKDOG CARNE OSSINHOS': 13,
+  'MIKDOG CARNE E OSSINHOS': 13,
+  'MIKDOG CARNE, ARROZ E VEGETAIS': 14,
+  'MIKDOG CARNE E VEGETAIS': 14,
+  'MIKDOG VEGETAIS': 14,
+  'MIKDOG SÊNIOR': 15,
+  'MIKDOG PEQUENAS RAÇAS': 16,
+  'MIKDOG RAÇAS PEQUENAS': 16,
+  'MIKDOG ADULTO RAÇAS PEQUENAS': 16,
+  'MIKDOG FILHOTES': 17,
+  'MIKDOG FILHOTE': 17,
+  'MIKDOG NUGGETS RECHEADOS': 18,
+  'MIKDOG NUGGETS': 18,
+
+  'MIKCAT GATOS CASTRADOS': 19,
+  'MIKCAT CASTRADOS': 19,
+  'MIKCAT NUGGETS RECHEADOS': 20,
+  'MIKCAT NUGGETS': 20,
+  'MIKCAT MIX': 21,
+  'MIKCAT FRUTOS DO MAR': 22,
+  'MIKCAT FRUTOS DO MAR, SALMÃO E FRANGO': 22,
+  'MIKCAT CARNE': 23,
+  'MIKCAT PEIXE': 24,
+  'MIKCAT CARNE E PEIXE': 25,
+  'MIKCAT FILHOTES': 26,
+  'MIKCAT FILHOTE': 26,
+
+  'DOG DOGS ADULTO': 27,
+  'DOG E DOGS ADULTO': 27,
+  'DOG & DOGS ADULTO': 27,
+  'DOG DOGS PEQUENAS RAÇAS': 28,
+  'DOG E DOGS PEQUENAS RAÇAS': 28,
+  'DOG & DOGS PEQUENAS RAÇAS': 28,
+  'DOG & DOGS PEQUENO PORTE': 28,
+  'DOG DOGS FILHOTES': 29,
+  'DOG E DOGS FILHOTE': 29,
+  'DOG & DOGS FILHOTE': 29,
+
+  'CAT E CATS GATOS ADULTOS NUGGETS RECHEADOS': 30,
+  'CAT & CATS NUGGETS': 30,
+  'CAT & CATS GATOS ADULTOS NUGGETS': 30,
+  'CAT E CATS GATOS ADULTOS': 31,
+  'CAT & CATS ADULTOS': 31,
+  'CAT E CATS': 31,
+
+  'ROOKIE ADULTO': 32,
+  'ROOKIE JUNIOR': 33,
+  'TORNADO ADULTO': 34,
+  'TORNADO ORIGINAL ADULTO': 34,
+  'TORNADO PEQUENAS RAÇAS': 35,
+  'TORNADO RAÇAS PEQUENAS ADULTAS': 35,
+  'TORNADO BABY': 36,
+
+  'ZECÃO': 37,
+  'ZECÃO ORIGINAL': 37,
+  'ZEQUINHA': 38,
+  'GERRYS': 39,
+  'LILI': 40,
+  'LILI DOG': 40,
+  'LUPY': 41,
+  'LUPY DOG': 41,
+  'ZECAT': 42,
+  'ZÉCAT': 42,
+};
+
+function normalizeProductName(name: string): string {
+  return name
+    .toUpperCase()
+    .trim()
+    .replace(/\s+/g, ' ')
+    .replace(/[áàâãä]/gi, 'A')
+    .replace(/[éèêë]/gi, 'E')
+    .replace(/[íìîï]/gi, 'I')
+    .replace(/[óòôõö]/gi, 'O')
+    .replace(/[úùûü]/gi, 'U')
+    .replace(/ç/gi, 'C')
+    .replace(/&/g, 'E');
+}
+
+export function getProductSortOrder(productName: string): number {
+  const normalizedName = normalizeProductName(productName);
+
+  for (const [key, order] of Object.entries(productOrderMap)) {
+    const normalizedKey = normalizeProductName(key);
+
+    if (normalizedName.includes(normalizedKey) || normalizedKey.includes(normalizedName)) {
+      return order;
+    }
+
+    if (normalizedName === normalizedKey) {
+      return order;
+    }
+  }
+
+  return 9999;
+}

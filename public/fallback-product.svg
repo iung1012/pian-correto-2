@@ -1,0 +1,10 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#f97316" rx="20"/>
+  <circle cx="100" cy="80" r="30" fill="white" opacity="0.9"/>
+  <path d="M70 80c0-16.569 13.431-30 30-30s30 13.431 30 30" stroke="white" stroke-width="3" fill="none" opacity="0.7"/>
+  <circle cx="90" cy="75" r="3" fill="white"/>
+  <circle cx="110" cy="75" r="3" fill="white"/>
+  <path d="M85 85c5 5 15 5 20 0" stroke="white" stroke-width="2" fill="none"/>
+  <text x="100" y="140" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">PIAN</text>
+  <text x="100" y="160" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle" opacity="0.9">ALIMENTOS</text>
+</svg>

@@ -1,0 +1,391 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #0E1813;
+  color: #FFFFFF;
+  line-height: 1.6;
+}
+
+/* Custom utility classes */
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.font-brush-script {
+  font-family: 'Brush Script MT', cursive;
+}
+
+.font-dancing {
+  font-family: 'Dancing Script', cursive;
+}
+
+/* Section backgrounds with high contrast */
+.section-white {
+  background: #FFFFFF;
+  border-bottom: 4px solid #FDD528;
+}
+
+.section-yellow {
+  background: #FDD528;
+  color: #0E1813;
+}
+
+.section-dark {
+  background: #0E1813;
+  color: #FFFFFF;
+}
+
+.section-red {
+  background: #C4080A;
+  color: #FFFFFF;
+}
+
+.section-divider {
+  position: relative;
+  padding-top: 2rem;
+}
+
+.section-divider::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 6px;
+  background: #FDD528;
+  border-radius: 2px;
+}
+
+/* Typography styles */
+h1, .h1 {
+  font-size: 95px;
+  font-weight: 900;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+}
+
+h2, .h2 {
+  font-size: 75px;
+  font-weight: 900;
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+h3, .h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+}
+
+h4, .h4 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+h5, .h5 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+h6, .h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0E1813;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FDD528;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FCC02A;
+}
+
+/* Infinite slider animations */
+@keyframes scroll-horizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-horizontal {
+  animation: scroll-horizontal linear infinite;
+  width: 200%;
+}
+
+.animate-scroll-horizontal.reverse {
+  animation-direction: reverse;
+}
+
+.animate-scroll-horizontal:hover.hover\:pause {
+  animation-play-state: paused;
+}
+
+/* Modal content styling - Layout de leitura profissional */
+.blog-article-content {
+  font-weight: 400;
+  color: #1f2937;
+}
+
+.blog-article-content h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+  color: #0f172a;
+  border-bottom: 3px solid #FDD528;
+  padding-bottom: 0.5rem;
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 1.3;
+}
+
+.blog-article-content h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #1e293b;
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 1.4;
+}
+
+.blog-article-content h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #334155;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.blog-article-content p {
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+  line-height: 1.9;
+  text-align: justify;
+  color: #374151;
+  font-size: 1.125rem;
+}
+
+.blog-article-content ul {
+  margin: 1.75rem 0;
+  padding-left: 2rem;
+  list-style-type: disc;
+}
+
+.blog-article-content li {
+  margin-bottom: 0.875rem;
+  font-weight: 400;
+  line-height: 1.8;
+  color: #374151;
+  padding-left: 0.5rem;
+}
+
+.blog-article-content li::marker {
+  color: #FDD528;
+  font-size: 1.2em;
+}
+
+.blog-article-content strong {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Primeiro parágrafo com destaque */
+.blog-article-content h2 + p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #1e293b;
+  margin-bottom: 2rem;
+}
+
+/* Espaçamento entre seções */
+.blog-article-content h2:not(:first-child) {
+  margin-top: 3rem;
+}
+
+/* Estilo para links dentro do conteúdo */
+.blog-article-content a {
+  color: #C4080A;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.blog-article-content a:hover {
+  color: #dc2626;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(253, 213, 40, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(253, 213, 40, 0.5); }
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Subtle pulse animation */
+@keyframes pulse-subtle {
+  0%, 100% { 
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 3s ease-in-out infinite;
+}
+
+/* Fade in up animation */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+/* Writing effect animation */
+@keyframes writing-effect {
+  0% {
+    width: 0;
+  }
+  70% {
+    width: 100%;
+  }
+  80%, 100% {
+    width: 100%;
+  }
+}
+
+.animate-writing-effect {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: writing-effect 4s ease-in-out infinite;
+}
+
+/* Typewriter animation for changing words */
+@keyframes typewriter-changing {
+  0% {
+    width: 0;
+    opacity: 1;
+  }
+  20% {
+    width: 100%;
+    opacity: 1;
+  }
+  80% {
+    width: 100%;
+    opacity: 1;
+  }
+  100% {
+    width: 0;
+    opacity: 1;
+  }
+}
+
+.typewriter-changing-word {
+  display: inline-block;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #dc2626;
+  animation: typewriter-changing 3s ease-in-out infinite;
+}
+
+.typewriter-changing-word::before {
+  content: 'RESPONSABILIDADE';
+  animation: change-words 12s infinite;
+}
+
+@keyframes change-words {
+  0%, 24% {
+    content: 'RESPONSABILIDADE';
+  }
+  25%, 49% {
+    content: 'AMOR';
+  }
+  50%, 74% {
+    content: 'ÉTICA';
+  }
+  75%, 99% {
+    content: 'COMPROMETIMENTO';
+  }
+  100% {
+    content: 'CONFIANÇA';
+  }
+}
+
+/* Cursor blinking animation */
+@keyframes blink {
+  0%, 50% {
+    border-color: #dc2626;
+  }
+  51%, 100% {
+    border-color: transparent;
+  }
+}
