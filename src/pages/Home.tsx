@@ -93,13 +93,11 @@ const Home = () => {
       <section className="py-4 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <a href="https://postimg.cc/xJDtwhWc" target="_blank" rel="noopener noreferrer">
-              <img
-                src="https://i.postimg.cc/0QrFwqnd/Banner-certificacao-Pian.png"
-                alt="Banner-certificacao-Pian"
-                className="w-full max-w-6xl mx-auto rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-              />
-            </a>
+            <img
+              src="/banner-certificacao-pian.jpg"
+              alt="Banner Certificação Pian"
+              className="w-full max-w-6xl mx-auto rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+            />
           </div>
         </div>
       </section>

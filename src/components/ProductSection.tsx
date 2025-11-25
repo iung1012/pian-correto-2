@@ -94,13 +94,23 @@ const ProductSection = () => {
       let matchesCategory = false;
 
       if (selectedCategory === 'Cachorros') {
-        matchesCategory = product.category === 'Cães';
+        // Excluir alimentos úmidos (sachê e enlatado/patê) da categoria Cachorros
+        matchesCategory = product.category === 'Cães' && 
+                         product.type !== 'Alimento Úmido' &&
+                         product.line !== 'Sachê' &&
+                         product.line !== 'Enlatado';
       } else if (selectedCategory === 'Gatos') {
-        matchesCategory = product.category === 'Gatos';
+        // Excluir alimentos úmidos da categoria Gatos também
+        matchesCategory = product.category === 'Gatos' && 
+                         product.type !== 'Alimento Úmido' &&
+                         product.line !== 'Sachê' &&
+                         product.line !== 'Enlatado';
       } else if (selectedCategory === 'Peixes') {
         matchesCategory = product.category === 'Peixes';
       } else if (selectedCategory === 'Alimentos Úmidos') {
-        matchesCategory = product.type === 'Alimento Úmido';
+        matchesCategory = product.type === 'Alimento Úmido' || 
+                         product.line === 'Sachê' || 
+                         product.line === 'Enlatado';
       } else if (selectedCategory === 'Snacks') {
         matchesCategory = product.type === 'Snack';
       }
@@ -167,13 +177,23 @@ const ProductSection = () => {
     // Filtrar produtos da nova categoria
     const newCategoryProducts = products.filter(product => {
       if (category === 'Cachorros') {
-        return product.category === 'Cães';
+        // Excluir alimentos úmidos (sachê e enlatado/patê) da categoria Cachorros
+        return product.category === 'Cães' && 
+               product.type !== 'Alimento Úmido' &&
+               product.line !== 'Sachê' &&
+               product.line !== 'Enlatado';
       } else if (category === 'Gatos') {
-        return product.category === 'Gatos';
+        // Excluir alimentos úmidos da categoria Gatos também
+        return product.category === 'Gatos' && 
+               product.type !== 'Alimento Úmido' &&
+               product.line !== 'Sachê' &&
+               product.line !== 'Enlatado';
       } else if (category === 'Peixes') {
         return product.category === 'Peixes';
       } else if (category === 'Alimentos Úmidos') {
-        return product.type === 'Alimento Úmido';
+        return product.type === 'Alimento Úmido' || 
+               product.line === 'Sachê' || 
+               product.line === 'Enlatado';
       } else if (category === 'Snacks') {
         return product.type === 'Snack';
       }
