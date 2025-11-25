@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase, Product } from '../lib/supabase';
-import { Plus, Edit, Trash2, Search, Loader2, AlertCircle } from 'lucide-react';
+import { Plus, Edit, Trash2, Search, Loader2, AlertCircle, FileText } from 'lucide-react';
 import ProductForm from '../components/ProductForm';
 import DeleteConfirmModal from '../components/DeleteConfirmModal';
 
@@ -116,13 +117,22 @@ const Admin = () => {
                 Gerencie o catálogo de produtos
               </p>
             </div>
-            <button
-              onClick={handleAdd}
-              className="flex items-center gap-2 px-6 py-3 bg-pian-red text-white font-bold font-barlow-condensed hover:bg-red-700 transition-colors"
-            >
-              <Plus className="h-5 w-5" />
-              Novo Produto
-            </button>
+            <div className="flex gap-3">
+              <Link
+                to="/admin/update-nutrition"
+                className="flex items-center gap-2 px-6 py-3 bg-pian-yellow text-pian-black font-bold font-barlow-condensed hover:bg-pian-yellow-dark transition-colors"
+              >
+                <FileText className="h-5 w-5" />
+                Atualizar Nutrição
+              </Link>
+              <button
+                onClick={handleAdd}
+                className="flex items-center gap-2 px-6 py-3 bg-pian-red text-white font-bold font-barlow-condensed hover:bg-red-700 transition-colors"
+              >
+                <Plus className="h-5 w-5" />
+                Novo Produto
+              </button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">

@@ -83,14 +83,28 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
       sections.composicao = composicaoMatch[1].trim();
     }
 
-    const enriquecimentoMatch = description.match(/##\s*ENRIQUECIMENTO MÍNIMO POR KG\s*([\s\S]*?)(?=##|$)/i);
+    // Buscar ENRIQUECIMENTO (pode ser "MÍNIMO POR KG", "POR QUILOGRAMA" ou "POR QUILOGRAMA DE PRODUTO")
+    const enriquecimentoMatch = description.match(/##\s*ENRIQUECIMENTO[\s\S]*?\n([\s\S]*?)(?=##\s*NÍVEIS|##\s*DIFERENCIAIS|$)/i);
     if (enriquecimentoMatch) {
-      sections.enriquecimento = enriquecimentoMatch[1].trim();
+      let enriquecimento = enriquecimentoMatch[1].trim();
+      // Converter pipes para quebras de linha se necessário
+      if (enriquecimento.includes('|')) {
+        enriquecimento = enriquecimento.split('|').map(item => item.trim()).filter(item => item).join('\n');
+      }
+      sections.enriquecimento = enriquecimento;
     }
 
-    const niveisMatch = description.match(/##\s*NÍVEIS DE GARANTIA\s*([\s\S]*?)(?=##|$)/i);
+    // Buscar NÍVEIS DE GARANTIA (pode ter "POR QUILOGRAMA DE PRODUTO" ou "POR QUILOGAMA")
+    const niveisMatch = description.match(/##\s*NÍVEIS DE GARANTIA[\s\S]*?\n([\s\S]*?)(?=##\s*DIFERENCIAIS|##\s*DESCRIÇÃO|$)/i);
     if (niveisMatch) {
-      sections.niveis = niveisMatch[1].trim();
+      let niveis = niveisMatch[1].trim();
+      // Remover números no início (ex: "8. NÍVEIS DE GARANTIA")
+      niveis = niveis.replace(/^\d+\.\s*/, '');
+      // Converter pipes para quebras de linha se necessário
+      if (niveis.includes('|')) {
+        niveis = niveis.split('|').map(item => item.trim()).filter(item => item).join('\n');
+      }
+      sections.niveis = niveis;
     }
 
     const diferenciaisMatch = description.match(/##\s*DIFERENCIAIS\s*([\s\S]*?)$/i);
@@ -99,6 +113,21 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
     }
 
     return sections;
+  };
+
+  const formatNiveisGarantia = (text: string) => {
+    const lines = text.split('\n').filter(line => line.trim());
+    return lines.map((line, index) => {
+      line = line.trim();
+      if (!line) return null;
+      
+      return (
+        <div key={index} className="flex items-start gap-2 bg-gray-50 p-2 rounded-lg">
+          <span className="text-pian-red font-bold text-xs">•</span>
+          <span className="text-gray-800 text-xs leading-relaxed flex-1">{line}</span>
+        </div>
+      );
+    });
   };
 
   const formatText = (text: string, isDiferenciais: boolean = false, isTechnicalSection: boolean = false) => {
@@ -340,9 +369,9 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
                   </div>
 
                   <div className="px-8 py-6 bg-white">
-                    <ul className="space-y-1.5 text-sm text-gray-800 leading-relaxed">
-                      {formatText(sections.enriquecimento, false, true)}
-                    </ul>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      {formatNiveisGarantia(sections.enriquecimento)}
+                    </div>
                   </div>
                 </div>
               )}
@@ -361,9 +390,9 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
                   </div>
 
                   <div className="px-8 py-6 bg-white">
-                    <ul className="space-y-1.5 text-sm text-gray-800 leading-relaxed">
-                      {formatText(sections.niveis, false, true)}
-                    </ul>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      {formatNiveisGarantia(sections.niveis)}
+                    </div>
                   </div>
                 </div>
               )}

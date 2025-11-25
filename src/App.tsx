@@ -13,6 +13,7 @@ import Blog from './pages/Blog';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
+import UpdateNutrition from './pages/UpdateNutrition';
 import SocialDemo from './pages/SocialDemo';
 import NavbarDemo from './pages/NavbarDemo';
 import GradientMenuDemo from './pages/GradientMenuDemo';
@@ -39,6 +40,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Admin />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/update-nutrition"
+                element={
+                  <ProtectedRoute>
+                    <UpdateNutrition />
                   </ProtectedRoute>
                 }
               />

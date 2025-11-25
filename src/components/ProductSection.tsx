@@ -60,6 +60,8 @@ const ProductSection = () => {
   async function fetchProducts() {
     try {
       setLoading(true);
+      // Adicionar timestamp para evitar cache
+      const timestamp = new Date().getTime();
       const { data, error } = await supabase
         .from('products')
         .select('*')
