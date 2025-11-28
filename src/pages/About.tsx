@@ -48,7 +48,7 @@ const About = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-pian-black mb-6 font-montserrat leading-tight">
             <h1 className="text-[75px] font-black text-white mb-4 font-barlow-condensed uppercase tracking-wider">
             <h1 className="text-[95px] font-black text-white mb-4 font-barlow-condensed uppercase tracking-wider">
-              <span className="text-red-600 font-italic animate-writing-effect">uma história de família</span>
+              <span className="text-gray-900 font-italic animate-writing-effect">uma história de família</span>
             </h1>
             </h1>
             </h1>
@@ -160,7 +160,7 @@ const About = () => {
           </div>
           <div className="max-w-6xl mx-auto prose prose-lg max-w-none text-gray-600 leading-relaxed space-y-6 font-montserrat">
             <p className="text-justify">
-              Com mais de 60 produtos distribuídos em 11 marcas, a Pian Alimentos está presente em todo o Brasil
+              A Pian Alimentos está presente em todo o Brasil
               e exporta para países da América Latina e África. Nosso crescimento também se reflete na construção
               de uma rede sólida de parceiros comerciais e representantes, que compartilham de nossos valores e
               nos ajudam a levar nossa missão ainda mais longe.
@@ -179,7 +179,7 @@ const About = () => {
           {/* Mensagem especial */}
           <div className="mt-12 text-center">
             <div className="space-y-6">
-              <p className="text-3xl md:text-4xl font-bold text-red-600 italic mb-6 font-dancing animate-fade-in-up">
+              <p className="text-3xl md:text-4xl font-medium italic mb-6 animate-fade-in-up" style={{ fontFamily: 'Brush Script MT, cursive', color: '#FDD528' }}>
                 Pian Alimentos: a gente entende esse amor.
               </p>
               <p className="text-xl md:text-2xl font-bold text-gray-900 font-montserrat animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
@@ -196,17 +196,6 @@ const About = () => {
           <div className="text-center mb-12">
             <h2 className="text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed uppercase tracking-wider">Nossos Valores</h2>
           </div>
-          
-          {/* Banner Nossos Diferenciais */}
-          <div className="text-center">
-            <a href="https://postimg.cc/3yrdc4pB" target="_blank" rel="noopener noreferrer">
-              <img
-                src="https://i.postimg.cc/5tLLj82Z/IMG-8503-1.png"
-                alt="Nossos Diferenciais - Pian"
-                className="w-full max-w-6xl mx-auto rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-              />
-            </a>
-          </div>
         </div>
       </section>
 
@@ -217,7 +206,7 @@ const About = () => {
             <img
               src="/banner-certificacao-pian.jpg"
               alt="Banner Certificação Pian"
-              className="w-full max-w-6xl mx-auto rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="w-full max-w-6xl mx-auto rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 object-contain"
             />
           </div>
         </div>

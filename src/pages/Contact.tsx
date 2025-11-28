@@ -157,7 +157,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="font-bold text-gray-900 font-bold font-barlow-condensed uppercase tracking-wider">TELEFONE</p>
-                      <p className="text-gray-900 font-bold font-barlow-condensed">(54) 3358-2222</p>
+                      <p className="text-gray-900 font-bold font-barlow-condensed">(54) 3477-1054</p>
                     </div>
                   </div>
                   

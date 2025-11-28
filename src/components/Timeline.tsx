@@ -444,28 +444,6 @@ const Timeline = () => {
         <TimelineUI data={timelineData} />
       </div>
       
-      {/* Call to Action */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="text-center">
-          <div className="bg-gradient-to-br from-pian-yellow to-pian-yellow-dark rounded-2xl p-8 shadow-xl relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="relative z-10">
-              <h2 className="text-[45px] font-bold text-pian-black mb-4 font-barlow-condensed uppercase tracking-wider">
-                Mais de 3 Décadas de Tradição, Infinitas Possibilidades
-              </h2>
-              <p className="text-pian-black/80 mb-6 max-w-2xl mx-auto font-barlow-condensed">
-                De uma pequena produção familiar em 1984 até nos tornarmos referência nacional em nutrição animal. Nossa história continua sendo escrita todos os dias.
-              </p>
-              <a
-                href="/about"
-                className="inline-flex items-center px-8 py-4 bg-pian-black text-white rounded-xl hover:bg-gray-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl font-bold font-barlow-condensed"
-              >
-                Conheça Nossa História Completa
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Image Modal */}
       <AnimatePresence>

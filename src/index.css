@@ -334,11 +334,11 @@ h6, .h6 {
     width: 0;
     opacity: 1;
   }
-  20% {
+  15% {
     width: 100%;
     opacity: 1;
   }
-  80% {
+  85% {
     width: 100%;
     opacity: 1;
   }
@@ -354,7 +354,7 @@ h6, .h6 {
   white-space: nowrap;
   overflow: hidden;
   border-right: 2px solid #dc2626;
-  animation: typewriter-changing 3s ease-in-out infinite;
+  animation: typewriter-changing 6s steps(20, end) infinite;
 }
 
 .typewriter-changing-word::before {

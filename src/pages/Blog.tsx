@@ -2,15 +2,6 @@ import React from 'react';
 import BlogSection from '../components/BlogSection';
 
 const Blog = () => {
-  const categories = [
-    { name: 'Nutrição', count: 45, color: 'bg-pian-yellow text-pian-black' },
-    { name: 'Saúde', count: 38, color: 'bg-pian-red text-white' },
-    { name: 'Comportamento', count: 32, color: 'bg-pian-black text-white' },
-    { name: 'Cuidados', count: 28, color: 'bg-pian-yellow text-pian-black' },
-    { name: 'Filhotes', count: 25, color: 'bg-pian-red text-white' },
-    { name: 'Dicas', count: 22, color: 'bg-pian-black text-white' }
-  ];
-
   return (
     <div className="pt-16">
       {/* Hero Section - Clean and Elegant */}
@@ -38,29 +29,6 @@ const Blog = () => {
             <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto font-bold font-barlow-condensed leading-relaxed">
               Dicas, novidades e informações especializadas sobre nutrição animal
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Categories */}
-      <section className="py-12 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-[75px] font-black text-gray-900 mb-3 font-barlow-condensed uppercase tracking-wider">
-              CATEGORIAS
-            </h2>
-            <p className="text-gray-600 font-montserrat">
-              Explore nossos artigos por categoria
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-            {categories.map((category, index) => (
-              <div key={index} className={`px-4 py-2 ${category.color} hover:opacity-90 transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md`}>
-                <span className="font-medium font-montserrat">{category.name}</span>
-                <span className="ml-2 text-sm font-montserrat">({category.count})</span>
-              </div>
-            ))}
           </div>
         </div>
       </section>

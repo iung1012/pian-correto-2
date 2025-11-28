@@ -6,13 +6,17 @@ const Products = () => {
     <div className="pt-16">
       {/* Hero Section - Clean and Elegant */}
       <section className="py-16 bg-pian-black relative overflow-hidden">
-        {/* Subtle background pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, #FDD528 2px, transparent 2px),
-                             radial-gradient(circle at 75% 75%, #FDD528 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
-          }}></div>
+        {/* Background com ração transparente */}
+        <div className="absolute inset-0 opacity-20">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: 'url(/racao-transparente.png)',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              opacity: 0.3
+            }}
+          ></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -29,7 +33,7 @@ const Products = () => {
             
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto font-bold font-barlow-condensed leading-relaxed">
-              Descubra nossa linha completa de rações desenvolvidas com ingredientes selecionados
+              DESCUBRA A NOSSA LINHA COMPLETA DE NUTRIÇÃO.
             </p>
           </div>
         </div>

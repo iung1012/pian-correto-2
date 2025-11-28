@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Calendar, Clock, ArrowRight, Share2 } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import BlogModal from './BlogModal';
 
 const BlogSection = () => {
@@ -647,30 +647,6 @@ const BlogSection = () => {
     setIsModalOpen(true);
   };
 
-  const handleShare = (post: any, e: React.MouseEvent) => {
-    e.stopPropagation();
-    
-    if (navigator.share) {
-      navigator.share({
-        title: post.title,
-        text: post.excerpt,
-        url: window.location.origin + `/blog/${post.id}`
-      }).catch(() => {
-        // Fallback se a API de compartilhamento falhar ou for negada
-        const url = window.location.origin + `/blog/${post.id}`;
-        navigator.clipboard.writeText(url).then(() => {
-          alert('Link copiado para a área de transferência!');
-        });
-      });
-    } else {
-      // Fallback para navegadores que não suportam Web Share API
-      const url = window.location.origin + `/blog/${post.id}`;
-      navigator.clipboard.writeText(url).then(() => {
-        alert('Link copiado para a área de transferência!');
-      });
-    }
-  };
-
   return (
     <section id="blog" className="py-20 section-gray-light section-divider">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -682,18 +658,17 @@ const BlogSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post) => (
-            <article key={post.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+            <article 
+              key={post.id} 
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"
+              onClick={() => handleReadMore(post)}
+            >
               <div className="relative">
                 <img
                   src={post.image}
                   alt={post.title}
                   className="w-full h-48 object-cover"
                 />
-                <div className="absolute top-4 left-4">
-                  <span className="bg-pian-yellow text-pian-black px-4 py-2 rounded-full text-sm font-bold font-montserrat">
-                    {post.category.toUpperCase()}
-                  </span>
-                </div>
               </div>
               
               <div className="p-6">
@@ -704,42 +679,13 @@ const BlogSection = () => {
                   {post.excerpt}
                 </p>
                 
-                <div className="flex items-center justify-end text-sm text-gray-500 mb-4">
-                  <button
-                    onClick={(e) => handleShare(post, e)}
-                    className="p-2 bg-black text-white rounded-full hover:bg-gray-800 transition-colors duration-200 shadow-lg"
-                    title="Compartilhar"
-                  >
-                    <Share2 className="h-4 w-4" />
-                  </button>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center text-sm text-gray-500 font-bold font-barlow-condensed">
-                    <Calendar className="h-4 w-4 mr-1" />
-                    <span>{post.date}</span>
-                  </div>
-                  <button 
-                    onClick={() => handleReadMore(post)}
-                    className="flex items-center bg-pian-yellow text-pian-black px-4 py-2 hover:bg-pian-yellow-dark transition-colors duration-200 font-helvetica-bold"
-                  >
-                    LER MAIS
-                    <ArrowRight className="h-4 w-4 ml-1" />
-                  </button>
+                <div className="flex items-center text-sm text-gray-500 font-bold font-barlow-condensed">
+                  <Calendar className="h-4 w-4 mr-1" />
+                  <span>{post.date}</span>
                 </div>
               </div>
             </article>
           ))}
-        </div>
-        
-        <div className="text-center mt-12">
-          <a
-            href="/blog"
-            className="inline-flex items-center px-8 py-4 bg-pian-yellow text-pian-black rounded-xl hover:bg-pian-yellow-dark transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-helvetica-bold"
-          >
-            VER TODOS OS ARTIGOS
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </a>
         </div>
       </div>
       

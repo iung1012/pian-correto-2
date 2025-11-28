@@ -208,9 +208,6 @@ export function InfiniteSliderHorizontal() {
 
         {/* Call to Action */}
         <div className="text-center mt-8 font-bold font-barlow-condensed">
-          <p className="text-gray-900 mb-6 font-montserrat font-bold text-lg">
-            MAIS DE 60 PRODUTOS DE ALTA QUALIDADE
-          </p>
           <a
             href="/products"
             className="inline-flex items-center px-10 py-5 bg-pian-yellow text-pian-black hover:bg-pian-yellow-dark transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl font-bold font-montserrat uppercase tracking-wide"

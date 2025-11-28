@@ -96,7 +96,7 @@ const Home = () => {
             <img
               src="/banner-certificacao-pian.jpg"
               alt="Banner Certificação Pian"
-              className="w-full max-w-6xl mx-auto rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="w-full max-w-6xl mx-auto rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 object-contain"
             />
           </div>
         </div>

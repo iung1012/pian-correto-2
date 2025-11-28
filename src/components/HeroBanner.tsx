@@ -40,7 +40,7 @@ const HeroBanner = () => {
   };
 
   return (
-    <div className="hero-banner relative h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] xl:h-screen overflow-hidden">
+    <div className="hero-banner relative aspect-[16/9] sm:aspect-auto sm:h-[60vh] md:h-[70vh] lg:h-[80vh] xl:h-[85vh] overflow-hidden bg-white">
       {slides.map((slide, index) => (
         <div
           key={index}
@@ -48,17 +48,17 @@ const HeroBanner = () => {
             index === currentSlide ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="w-full h-full bg-gradient-to-br from-orange-100 to-orange-50">
+          <div className="w-full h-full bg-white">
             <img
               src={slide.image}
               alt={slide.alt}
-              className="w-full h-full object-cover object-center hero-banner-image sm:object-cover"
+              className="w-full h-full object-contain sm:object-cover hero-banner-image"
+              style={{ objectPosition: 'center center' }}
               loading={index === 0 ? "eager" : "lazy"}
               decoding="async"
               fetchpriority={index === 0 ? "high" : "auto"}
               onError={(e) => {
                 console.log('Image failed to load:', slide.image);
-                // Fallback to a gradient background if image fails
                 e.currentTarget.style.display = 'none';
                 e.currentTarget.parentElement!.style.background = 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)';
               }}
@@ -70,15 +70,17 @@ const HeroBanner = () => {
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 sm:p-3 transition-all duration-300 hover:scale-110 z-20 touch-manipulation"
+        className="absolute left-1 sm:left-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/40 backdrop-blur-sm rounded-full p-2 sm:p-3 transition-all duration-300 hover:scale-110 z-20 touch-manipulation"
+        aria-label="Slide anterior"
       >
-        <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+        <ChevronLeft className="h-4 w-4 sm:h-6 sm:w-6 text-white" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full p-3 sm:p-3 transition-all duration-300 hover:scale-110 z-20 touch-manipulation"
+        className="absolute right-1 sm:right-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/40 backdrop-blur-sm rounded-full p-2 sm:p-3 transition-all duration-300 hover:scale-110 z-20 touch-manipulation"
+        aria-label="Próximo slide"
       >
-        <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+        <ChevronRight className="h-4 w-4 sm:h-6 sm:w-6 text-white" />
       </button>
 
       {/* Slide Indicators */}

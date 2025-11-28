@@ -108,7 +108,7 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-start">
                 <Phone className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0" style={{ color: '#FDD528' }} />
-                <span className="text-gray-300 font-semibold font-barlow-condensed text-base">(54) 3358-2222</span>
+                <span className="text-gray-300 font-semibold font-barlow-condensed text-base">(54) 3477-1054</span>
               </div>
               <div className="flex items-start">
                 <Mail className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0" style={{ color: '#FDD528' }} />

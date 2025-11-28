@@ -22,18 +22,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   onViewDetails
 }) => {
   const getClassificationColor = (classif: string) => {
-    switch (classif) {
-      case 'Super Premium':
-        return 'bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500';
-      case 'Premium Especial':
-        return 'bg-orange-600';
-      case 'Premium':
-        return 'bg-gradient-to-r from-red-600 to-red-700';
-      case 'Standard':
-        return 'bg-gray-600';
-      default:
-        return 'bg-gray-600';
-    }
+    // Todos os marcadores agora são cinza
+    return 'bg-gray-600';
   };
 
   const getAnimalIcon = (animalCategory: string) => {
@@ -98,9 +88,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {classification && type !== 'Alimento Úmido' && type !== 'Snack' && category !== 'Peixes' && (
             <div className="flex items-center gap-2">
               <span className="text-gray-400 text-xs font-bold font-barlow-condensed">Linha {classification}</span>
-              <div className="text-pian-red flex items-center justify-center">
-                {getAnimalIcon(category)}
-              </div>
             </div>
           )}
         </div>

@@ -19,9 +19,9 @@ const ProductSection = () => {
   const getAvailableLines = (category: string) => {
     if (category === 'Cachorros' || category === 'Gatos') {
       return [
-        { name: 'Super Premium', color: 'bg-gradient-to-r from-yellow-400 to-yellow-600 text-white' },
-        { name: 'Premium Especial', color: 'bg-orange-600 text-white' },
-        { name: 'Premium', color: 'bg-gradient-to-r from-red-600 to-red-700 text-white' },
+        { name: 'Super Premium', color: 'bg-gray-600 text-white' },
+        { name: 'Premium Especial', color: 'bg-gray-600 text-white' },
+        { name: 'Premium', color: 'bg-gray-600 text-white' },
         { name: 'Standard', color: 'bg-gray-600 text-white' },
       ];
     }
@@ -82,9 +82,9 @@ const ProductSection = () => {
   const mainCategories = [
     { name: 'Cachorros', icon: <Dog className="h-4 w-4" />, color: 'bg-blue-100 text-blue-800' },
     { name: 'Gatos', icon: <Cat className="h-4 w-4" />, color: 'bg-green-100 text-green-800' },
-    { name: 'Peixes', icon: <Fish className="h-4 w-4" />, color: 'bg-teal-100 text-teal-800' },
     { name: 'Alimentos Úmidos', icon: <Package className="h-4 w-4" />, color: 'bg-pink-100 text-pink-800' },
     { name: 'Snacks', icon: <Cookie className="h-4 w-4" />, color: 'bg-amber-100 text-amber-800' },
+    { name: 'Peixes', icon: <Fish className="h-4 w-4" />, color: 'bg-teal-100 text-teal-800' },
   ];
 
   // Filtrar produtos
