@@ -18,7 +18,7 @@ const Blog = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center relative z-10">
             {/* Main title */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 font-bold font-barlow-condensed uppercase tracking-wider">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 font-bold font-barlow-condensed uppercase tracking-wider break-words px-2">
               BLOG
             </h1>
             
@@ -39,7 +39,7 @@ const Blog = () => {
       {/* Newsletter */}
       <section className="py-16 bg-pian-black">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-[45px] font-bold text-white mb-4 font-barlow-condensed">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[45px] font-bold text-white mb-4 font-barlow-condensed break-words px-2">
             RECEBA NOSSAS NOVIDADES
           </h2>
           <p className="text-lg text-gray-300 mb-8 font-bold font-barlow-condensed">

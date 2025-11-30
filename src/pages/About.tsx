@@ -45,12 +45,8 @@ const About = () => {
       <section className="py-20 section-yellow-accent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-pian-black mb-6 font-montserrat leading-tight">
-            <h1 className="text-[75px] font-black text-white mb-4 font-barlow-condensed uppercase tracking-wider">
-            <h1 className="text-[95px] font-black text-white mb-4 font-barlow-condensed uppercase tracking-wider">
-              <span className="text-gray-900 font-italic animate-writing-effect">uma história de família</span>
-            </h1>
-            </h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[75px] font-black text-gray-900 mb-4 font-barlow-condensed uppercase tracking-wider break-words px-2">
+              <span className="font-italic animate-writing-effect">uma história de família</span>
             </h1>
 
             {/* YouTube Video */}
@@ -73,7 +69,7 @@ const About = () => {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 section-divider pt-8">
-            <h2 className="text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed uppercase tracking-wider">Nossas Origens</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed uppercase tracking-wider break-words px-2">Nossas Origens</h2>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Texto */}
@@ -110,8 +106,8 @@ const About = () => {
             {/* Vídeo */}
             <div>
               <div className="text-center mb-8">
-                <h2 className="text-[75px] font-black text-gray-900 mb-4 font-barlow-condensed uppercase tracking-wider">Nossa História em Vídeo</h2>
-                <p className="text-2xl text-gray-600 font-bold font-barlow-condensed">Conheça mais sobre nossa trajetória e valores</p>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[75px] font-black text-gray-900 mb-4 font-barlow-condensed uppercase tracking-wider break-words px-2">Nossa História em Vídeo</h2>
+                <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 font-bold font-barlow-condensed px-2">Conheça mais sobre nossa trajetória e valores</p>
               </div>
               <div className="relative w-full h-0 pb-[56.25%] rounded-2xl overflow-hidden shadow-2xl border-2 border-pian-yellow/30">
                 <iframe 
@@ -129,7 +125,7 @@ const About = () => {
             {/* Texto Crescimento e Inovação */}
             <div>
               <div className="text-center mb-8">
-                <h2 className="text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed uppercase tracking-wider">Crescimento e Inovação</h2>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed uppercase tracking-wider break-words px-2">Crescimento e Inovação</h2>
               </div>
               <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed space-y-6 font-montserrat">
                 <p className="text-justify">
@@ -156,7 +152,7 @@ const About = () => {
       <section className="py-16 section-yellow-light section-divider">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed uppercase tracking-wider">Presente e Futuro</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed uppercase tracking-wider break-words px-2">Presente e Futuro</h2>
           </div>
           <div className="max-w-6xl mx-auto prose prose-lg max-w-none text-gray-600 leading-relaxed space-y-6 font-montserrat">
             <p className="text-justify">
@@ -194,7 +190,7 @@ const About = () => {
       <section className="py-16 section-gray-light section-divider">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed uppercase tracking-wider">Nossos Valores</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed uppercase tracking-wider break-words px-2">Nossos Valores</h2>
           </div>
         </div>
       </section>

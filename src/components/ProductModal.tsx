@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, Package, Award, Beef, Activity, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { X, Package, Award, Beef, Activity, ChevronLeft, ChevronRight, Loader2, ChevronUp } from 'lucide-react';
 
 interface ProductModalProps {
   product: {
@@ -17,6 +17,11 @@ interface ProductModalProps {
 
 const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [imageLoading, setImageLoading] = useState(true);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const guiaAlimentarImages = [
     'https://i.postimg.cc/xTMpWBLY/1.png',
@@ -32,6 +37,78 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + guiaAlimentarImages.length) % guiaAlimentarImages.length);
+  };
+
+  // Animações e efeitos
+  useEffect(() => {
+    if (isOpen) {
+      setIsVisible(true);
+      document.body.style.overflow = 'hidden';
+    } else {
+      setIsVisible(false);
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  // Navegação por teclado
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+      const hasGuiaAlimentar = product.classification !== 'Linha Peixes' &&
+        product.classification !== 'Linha Snacks' &&
+        product.classification !== 'Alimentos Úmidos' &&
+        product.type !== 'Alimento Úmido' &&
+        !product.name.includes('PRÓPEIXES') &&
+        !product.name.includes('PROPEIXES');
+      
+      if (hasGuiaAlimentar) {
+        if (e.key === 'ArrowLeft') {
+          setCurrentSlide((prev) => (prev - 1 + guiaAlimentarImages.length) % guiaAlimentarImages.length);
+        }
+        if (e.key === 'ArrowRight') {
+          setCurrentSlide((prev) => (prev + 1) % guiaAlimentarImages.length);
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose, product]);
+
+  // Scroll to top quando produto muda
+  useEffect(() => {
+    if (contentRef.current && isOpen) {
+      contentRef.current.scrollTop = 0;
+      setImageLoading(true);
+    }
+  }, [product.id, isOpen]);
+
+  // Detectar scroll para mostrar botão "voltar ao topo"
+  useEffect(() => {
+    const handleScroll = () => {
+      if (contentRef.current) {
+        setShowScrollTop(contentRef.current.scrollTop > 300);
+      }
+    };
+
+    const content = contentRef.current;
+    if (content) {
+      content.addEventListener('scroll', handleScroll);
+      return () => content.removeEventListener('scroll', handleScroll);
+    }
+  }, [isOpen]);
+
+  const scrollToTop = () => {
+    if (contentRef.current) {
+      contentRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   if (!isOpen) return null;
@@ -83,24 +160,19 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
       sections.composicao = composicaoMatch[1].trim();
     }
 
-    // Buscar ENRIQUECIMENTO (pode ser "MÍNIMO POR KG", "POR QUILOGRAMA" ou "POR QUILOGRAMA DE PRODUTO")
     const enriquecimentoMatch = description.match(/##\s*ENRIQUECIMENTO[\s\S]*?\n([\s\S]*?)(?=##\s*NÍVEIS|##\s*DIFERENCIAIS|$)/i);
     if (enriquecimentoMatch) {
       let enriquecimento = enriquecimentoMatch[1].trim();
-      // Converter pipes para quebras de linha se necessário
       if (enriquecimento.includes('|')) {
         enriquecimento = enriquecimento.split('|').map(item => item.trim()).filter(item => item).join('\n');
       }
       sections.enriquecimento = enriquecimento;
     }
 
-    // Buscar NÍVEIS DE GARANTIA (pode ter "POR QUILOGRAMA DE PRODUTO" ou "POR QUILOGAMA")
     const niveisMatch = description.match(/##\s*NÍVEIS DE GARANTIA[\s\S]*?\n([\s\S]*?)(?=##\s*DIFERENCIAIS|##\s*DESCRIÇÃO|$)/i);
     if (niveisMatch) {
       let niveis = niveisMatch[1].trim();
-      // Remover números no início (ex: "8. NÍVEIS DE GARANTIA")
       niveis = niveis.replace(/^\d+\.\s*/, '');
-      // Converter pipes para quebras de linha se necessário
       if (niveis.includes('|')) {
         niveis = niveis.split('|').map(item => item.trim()).filter(item => item).join('\n');
       }
@@ -122,9 +194,9 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
       if (!line) return null;
       
       return (
-        <div key={index} className="flex items-start gap-2 bg-gray-50 p-2 rounded-lg">
-          <span className="text-pian-red font-bold text-xs">•</span>
-          <span className="text-gray-800 text-xs leading-relaxed flex-1">{line}</span>
+        <div key={index} className="flex items-start gap-3 bg-gradient-to-br from-gray-50 to-white p-3 rounded-lg border border-gray-100 hover:border-gray-200 transition-all duration-200 hover:shadow-sm">
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-gray-600 mt-2"></span>
+          <span className="text-gray-800 text-xs sm:text-sm leading-relaxed flex-1 font-barlow-condensed">{line}</span>
         </div>
       );
     });
@@ -166,11 +238,11 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
       if (line.includes('|')) {
         const items = line.split('|').map(item => item.trim()).filter(item => item);
         return (
-          <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
+          <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
             {items.map((item, i) => (
-              <div key={i} className="flex items-start gap-2 bg-gray-50 p-2 rounded-lg">
-                <span className="text-pian-red font-bold text-xs">•</span>
-                <span className="text-gray-800 text-xs leading-relaxed flex-1">{item}</span>
+              <div key={i} className="flex items-start gap-3 bg-gradient-to-br from-gray-50 to-white p-3 rounded-lg border border-gray-100 hover:border-gray-200 transition-all duration-200 hover:shadow-sm">
+                <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-gray-600 mt-2"></span>
+                <span className="text-gray-800 text-xs sm:text-sm leading-relaxed flex-1 font-barlow-condensed">{item}</span>
               </div>
             ))}
           </div>
@@ -179,9 +251,9 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
 
       if (isTechnicalSection) {
         return (
-          <li key={index} className="flex items-start gap-2 bg-gray-50 p-2 rounded-lg mb-2">
-            <span className="text-pian-red font-bold text-xs">•</span>
-            <span className="text-gray-800 text-xs leading-relaxed flex-1">{line}</span>
+          <li key={index} className="flex items-start gap-3 bg-gradient-to-br from-gray-50 to-white p-3 rounded-lg mb-2 border border-gray-100 hover:border-gray-200 transition-all duration-200 hover:shadow-sm">
+            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-gray-600 mt-2"></span>
+            <span className="text-gray-800 text-xs sm:text-sm leading-relaxed flex-1 font-barlow-condensed">{line}</span>
           </li>
         );
       }
@@ -200,19 +272,27 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
     : sections.simpleDescription;
 
   return (
-    <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-2xl rounded-3xl border border-pian-yellow/20 relative">
+    <div 
+      className={`fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div 
+        ref={modalRef}
+        className={`bg-white max-w-7xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-hidden shadow-2xl rounded-2xl sm:rounded-3xl border border-gray-200 relative transform transition-all duration-300 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
+      >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 z-20 p-3 bg-pian-black/90 hover:bg-pian-red text-white transition-all duration-300 group rounded-full shadow-lg hover:scale-110"
+          className="absolute top-3 right-3 sm:top-6 sm:right-6 z-30 p-2 sm:p-3 bg-white/90 hover:bg-white text-gray-800 hover:text-pian-red transition-all duration-300 group rounded-full shadow-lg hover:scale-110 border border-gray-200"
           aria-label="Fechar"
         >
-          <X className="h-6 w-6 group-hover:rotate-90 transition-transform duration-300" />
+          <X className="h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-90 transition-transform duration-300" />
         </button>
 
-        {/* Hero Header - Inspired by Distributors */}
-        <div className="bg-pian-black relative overflow-hidden">
+        {/* Hero Header - Modern Design */}
+        <div className="bg-gradient-to-br from-pian-black via-gray-900 to-pian-black relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute inset-0" style={{
               backgroundImage: `radial-gradient(circle at 25% 25%, #FDD528 2px, transparent 2px),
@@ -221,50 +301,65 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
             }}></div>
           </div>
 
-          <div className="relative z-10 px-8 py-8 text-center">
-            <div className="flex flex-wrap justify-center gap-2 mb-4">
-              <span className="inline-block bg-pian-yellow text-pian-black px-4 py-2 text-xs font-bold uppercase tracking-wider font-barlow-condensed">
+          <div className="relative z-10 px-4 sm:px-8 py-6 sm:py-8 text-center">
+            <div className="flex flex-wrap justify-center gap-2 mb-3 sm:mb-4">
+              <span className="inline-block bg-gray-600/90 backdrop-blur-sm text-white px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-bold uppercase tracking-wider font-barlow-condensed rounded-full">
                 {product.category}
               </span>
               {product.type && (
-                <span className="inline-block bg-pian-red text-white px-4 py-2 text-xs font-bold uppercase tracking-wider font-barlow-condensed">
+                <span className="inline-block bg-gray-600/90 backdrop-blur-sm text-white px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-bold uppercase tracking-wider font-barlow-condensed rounded-full">
                   {product.type}
                 </span>
               )}
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-black text-white mb-4 font-barlow-condensed uppercase tracking-wider">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 sm:mb-4 font-barlow-condensed uppercase tracking-wider leading-tight px-2">
               {product.name}
             </h1>
 
-            <div className="w-24 h-1 bg-pian-red mx-auto"></div>
+            <div className="w-16 sm:w-24 h-0.5 sm:h-1 bg-pian-red mx-auto"></div>
           </div>
         </div>
 
-        {/* Content Area */}
-        <div className="overflow-y-auto max-h-[calc(90vh-200px)] bg-white">
-          <div className="p-8 lg:p-12">
-            {/* Product Image Card */}
-            <div className="max-w-2xl mx-auto mb-8">
-              <div className="backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500 bg-white">
-                <div className="p-8">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-64 object-contain mx-auto transform hover:scale-105 transition-transform duration-500"
-                    onError={(e) => {
-                      const target = e.currentTarget;
-                      target.src = '/fallback-product.svg';
-                    }}
-                  />
+        {/* Content Area - Modern Grid Layout */}
+        <div 
+          ref={contentRef}
+          className="overflow-y-auto max-h-[calc(95vh-180px)] sm:max-h-[calc(90vh-200px)] bg-gradient-to-b from-white to-gray-50 scroll-smooth"
+        >
+          <div className="p-4 sm:p-6 lg:p-8 xl:p-12">
+            {/* Product Image - Modern Card */}
+            <div className="max-w-3xl mx-auto mb-8 sm:mb-12 animate-fade-in-up">
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-500"></div>
+                <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden p-4 sm:p-8 lg:p-12 border border-gray-100">
+                  <div className="relative aspect-square max-w-md mx-auto">
+                    {imageLoading && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
+                        <Loader2 className="h-12 w-12 text-gray-400 animate-spin" />
+                      </div>
+                    )}
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className={`w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-700 ease-out ${
+                        imageLoading ? 'opacity-0' : 'opacity-100'
+                      }`}
+                      onLoad={() => setImageLoading(false)}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        target.src = '/fallback-product.svg';
+                        setImageLoading(false);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Information Sections */}
-            <div className="max-w-5xl mx-auto space-y-6">
+            {/* Information Sections - Modern Grid */}
+            <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
               {!hasAnyContent && (
-                <div className="text-center py-12">
+                <div className="text-center py-16 animate-fade-in-up">
                   <p className="text-gray-600 text-lg font-barlow-condensed">
                     Informações detalhadas em breve.
                   </p>
@@ -273,104 +368,127 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
 
               {/* Diferenciais - FIRST SECTION */}
               {sections.isStructured && sections.diferenciais && (
-                <div className="backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500">
-                  <div className="bg-gradient-to-r from-pian-red to-red-700 px-6 py-5 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full animate-shimmer"></div>
-                    <div className="flex items-center justify-center">
-                      <Award className="h-7 w-7 text-white mr-3" />
-                      <h2 className="text-2xl font-bold text-white font-barlow-condensed uppercase tracking-wide">
-                        Diferenciais
-                      </h2>
+                <div className="group animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                  <div className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-white border border-gray-100">
+                    <div className="bg-gradient-to-r from-gray-600 via-gray-650 to-gray-700 px-4 sm:px-6 py-4 sm:py-5 relative overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                      <div className="relative flex items-center justify-center gap-3">
+                        <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
+                          <Award className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                        </div>
+                        <h2 className="text-xl sm:text-2xl font-bold text-white font-barlow-condensed uppercase tracking-wide">
+                          Diferenciais
+                        </h2>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="px-10 py-8 bg-white">
-                    <ul className="space-y-3 text-center">
-                      {formatText(sections.diferenciais, true)}
-                    </ul>
+                    <div className="px-4 sm:px-6 lg:px-10 py-6 sm:py-8 bg-white">
+                      <ul className="space-y-3 sm:space-y-4 text-center">
+                        {formatText(sections.diferenciais, true)}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               )}
 
-              {/* Simple Description Display (for products without structured format) */}
+              {/* Simple Description Display */}
               {!sections.isStructured && sections.simpleDescription && (
-                <div className="backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500">
-                  <div className="bg-gradient-to-r from-pian-yellow to-pian-yellow-dark px-6 py-4 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full animate-shimmer"></div>
-                    <div className="flex items-center justify-center">
-                      <Package className="h-6 w-6 text-pian-black mr-3" />
-                      <h2 className="text-xl font-bold text-pian-black font-barlow-condensed uppercase">
-                        Sobre o Produto
-                      </h2>
+                <div className="group animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                  <div className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-white border border-gray-100">
+                    <div className="bg-gradient-to-r from-gray-600 via-gray-650 to-gray-700 px-4 sm:px-6 py-4 relative overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                      <div className="relative flex items-center justify-center gap-3">
+                        <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
+                          <Package className="h-5 w-5 text-white" />
+                        </div>
+                        <h2 className="text-lg sm:text-xl font-bold text-white font-barlow-condensed uppercase">
+                          Sobre o Produto
+                        </h2>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="px-8 py-6 bg-white">
-                    <div className="text-gray-800 leading-relaxed">
-                      {formatText(sections.simpleDescription)}
+                    <div className="px-4 sm:px-6 lg:px-8 py-6 bg-white">
+                      <div className="text-gray-800 leading-relaxed text-sm sm:text-base">
+                        {formatText(sections.simpleDescription)}
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Descrição */}
-              {sections.isStructured && sections.descricao && (
-                <div className="backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500">
-                  <div className="bg-gradient-to-r from-pian-yellow to-pian-yellow-dark px-6 py-4 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full animate-shimmer"></div>
-                    <div className="flex items-center justify-center">
-                      <Award className="h-6 w-6 text-pian-black mr-3" />
-                      <h2 className="text-xl font-bold text-pian-black font-barlow-condensed uppercase">
-                        Descrição
-                      </h2>
-                    </div>
-                  </div>
+              {/* Grid Layout para seções técnicas */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                {/* Descrição */}
+                {sections.isStructured && sections.descricao && (
+                  <div className="group animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                    <div className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-white border border-gray-100 h-full">
+                      <div className="bg-gradient-to-r from-gray-600 via-gray-650 to-gray-700 px-4 sm:px-6 py-4 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                        <div className="relative flex items-center justify-center gap-3">
+                          <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
+                            <Package className="h-5 w-5 text-white" />
+                          </div>
+                          <h2 className="text-lg sm:text-xl font-bold text-white font-barlow-condensed uppercase">
+                            Descrição
+                          </h2>
+                        </div>
+                      </div>
 
-                  <div className="px-8 py-6 bg-white">
-                    <div className="text-gray-800 leading-relaxed">
-                      {formatText(sections.descricao)}
+                      <div className="px-4 sm:px-6 lg:px-8 py-6 bg-white">
+                        <div className="text-gray-800 leading-relaxed text-sm sm:text-base">
+                          {formatText(sections.descricao)}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Composição */}
-              {sections.isStructured && sections.composicao && (
-                <div className="backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500">
-                  <div className="bg-gradient-to-r from-gray-700 to-gray-800 px-6 py-4 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full animate-shimmer"></div>
-                    <div className="flex items-center justify-center">
-                      <Beef className="h-6 w-6 text-white mr-3" />
-                      <h2 className="text-xl font-bold text-white font-barlow-condensed uppercase">
-                        Composição Básica
-                      </h2>
-                    </div>
-                  </div>
+                {/* Composição */}
+                {sections.isStructured && sections.composicao && (
+                  <div className="group animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                    <div className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-white border border-gray-100 h-full">
+                      <div className="bg-gradient-to-r from-gray-700 via-gray-750 to-gray-800 px-4 sm:px-6 py-4 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                        <div className="relative flex items-center justify-center gap-3">
+                          <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
+                            <Beef className="h-5 w-5 text-white" />
+                          </div>
+                          <h2 className="text-lg sm:text-xl font-bold text-white font-barlow-condensed uppercase">
+                            Composição Básica
+                          </h2>
+                        </div>
+                      </div>
 
-                  <div className="px-8 py-6 bg-white">
-                    <div className="text-gray-800 text-sm leading-relaxed">
-                      {formatText(sections.composicao)}
+                      <div className="px-4 sm:px-6 lg:px-8 py-6 bg-white">
+                        <div className="text-gray-800 text-sm leading-relaxed">
+                          {formatText(sections.composicao)}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
 
               {/* Enriquecimento */}
               {sections.isStructured && sections.enriquecimento && (
-                <div className="backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500">
-                  <div className="bg-gradient-to-r from-gray-700 to-gray-800 px-6 py-4 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full animate-shimmer"></div>
-                    <div className="flex items-center justify-center">
-                      <Activity className="h-6 w-6 text-white mr-3" />
-                      <h2 className="text-xl font-bold text-white font-barlow-condensed uppercase">
-                        Enriquecimento Mínimo por KG
-                      </h2>
+                <div className="group animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                  <div className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-white border border-gray-100">
+                    <div className="bg-gradient-to-r from-gray-700 via-gray-750 to-gray-800 px-4 sm:px-6 py-4 relative overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                      <div className="relative flex items-center justify-center gap-3">
+                        <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
+                          <Activity className="h-5 w-5 text-white" />
+                        </div>
+                        <h2 className="text-lg sm:text-xl font-bold text-white font-barlow-condensed uppercase">
+                          Enriquecimento Mínimo por KG
+                        </h2>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="px-8 py-6 bg-white">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      {formatNiveisGarantia(sections.enriquecimento)}
+                    <div className="px-4 sm:px-6 lg:px-8 py-6 bg-white">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {formatNiveisGarantia(sections.enriquecimento)}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -378,96 +496,104 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
 
               {/* Níveis de Garantia */}
               {sections.isStructured && sections.niveis && (
-                <div className="backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500">
-                  <div className="bg-gradient-to-r from-gray-700 to-gray-800 px-6 py-4 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full animate-shimmer"></div>
-                    <div className="flex items-center justify-center">
-                      <Package className="h-6 w-6 text-white mr-3" />
-                      <h2 className="text-xl font-bold text-white font-barlow-condensed uppercase">
-                        Níveis de Garantia
-                      </h2>
+                <div className="group animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+                  <div className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-white border border-gray-100">
+                    <div className="bg-gradient-to-r from-gray-700 via-gray-750 to-gray-800 px-4 sm:px-6 py-4 relative overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                      <div className="relative flex items-center justify-center gap-3">
+                        <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
+                          <Award className="h-5 w-5 text-white" />
+                        </div>
+                        <h2 className="text-lg sm:text-xl font-bold text-white font-barlow-condensed uppercase">
+                          Níveis de Garantia
+                        </h2>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="px-8 py-6 bg-white">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      {formatNiveisGarantia(sections.niveis)}
+                    <div className="px-4 sm:px-6 lg:px-8 py-6 bg-white">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {formatNiveisGarantia(sections.niveis)}
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Guia Alimentar Section - Only for relevant products */}
+              {/* Guia Alimentar Section */}
               {product.classification !== 'Linha Peixes' &&
                product.classification !== 'Linha Snacks' &&
                product.classification !== 'Alimentos Úmidos' &&
                product.type !== 'Alimento Úmido' &&
                !product.name.includes('PRÓPEIXES') &&
                !product.name.includes('PROPEIXES') && (
-                <div className="backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden transform hover:scale-105 transition-all duration-500 mt-8">
-                  <div className="bg-gradient-to-r from-pian-yellow to-pian-yellow-dark px-6 py-5 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full animate-shimmer"></div>
-                    <div className="flex items-center justify-center">
-                      <Package className="h-7 w-7 text-pian-black mr-3" />
-                      <h2 className="text-2xl font-bold text-pian-black font-barlow-condensed uppercase tracking-wide">
-                        Guia Alimentar
-                      </h2>
-                    </div>
-                  </div>
-
-                  <div className="px-8 py-8 bg-white">
-                    <p className="text-justify text-gray-800 text-base leading-relaxed mb-6 font-semibold">
-                      Toda introdução de um novo alimento deve ser gradual e crescente. Para uma perfeita adaptação do sistema digestório sugerimos o seguinte programa:
-                    </p>
-
-                    {/* Carousel */}
-                    <div className="relative">
-                      <div className="overflow-hidden rounded-2xl shadow-lg">
-                        <div className="relative aspect-[16/9] bg-white">
-                          <img
-                            src={guiaAlimentarImages[currentSlide]}
-                            alt={`Guia Alimentar - Etapa ${currentSlide + 1}`}
-                            className="w-full h-full object-contain"
-                          />
+                <div className="group animate-fade-in-up mt-8" style={{ animationDelay: '0.6s' }}>
+                  <div className="relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 bg-white border border-gray-100">
+                    <div className="bg-gradient-to-r from-gray-600 via-gray-650 to-gray-700 px-4 sm:px-6 py-4 sm:py-5 relative overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                      <div className="relative flex items-center justify-center gap-3">
+                        <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm">
+                          <Package className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                         </div>
+                        <h2 className="text-xl sm:text-2xl font-bold text-white font-barlow-condensed uppercase tracking-wide">
+                          Guia Alimentar
+                        </h2>
                       </div>
+                    </div>
 
-                      {/* Navigation Buttons */}
-                      <button
-                        onClick={prevSlide}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-pian-black/80 hover:bg-pian-red text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-10"
-                        aria-label="Anterior"
-                      >
-                        <ChevronLeft className="h-6 w-6" />
-                      </button>
+                    <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 bg-white">
+                      <p className="text-justify text-gray-800 text-sm sm:text-base leading-relaxed mb-6 font-semibold font-barlow-condensed">
+                        Toda introdução de um novo alimento deve ser gradual e crescente. Para uma perfeita adaptação do sistema digestório sugerimos o seguinte programa:
+                      </p>
 
-                      <button
-                        onClick={nextSlide}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-pian-black/80 hover:bg-pian-red text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-10"
-                        aria-label="Próximo"
-                      >
-                        <ChevronRight className="h-6 w-6" />
-                      </button>
+                      {/* Carousel */}
+                      <div className="relative group/carousel">
+                        <div className="overflow-hidden rounded-xl shadow-xl border border-gray-200">
+                          <div className="relative aspect-[16/9] bg-gradient-to-br from-gray-50 to-white">
+                            <img
+                              src={guiaAlimentarImages[currentSlide]}
+                              alt={`Guia Alimentar - Etapa ${currentSlide + 1}`}
+                              className="w-full h-full object-contain transition-opacity duration-300"
+                            />
+                          </div>
+                        </div>
 
-                      {/* Dots Indicator */}
-                      <div className="flex justify-center gap-2 mt-6">
-                        {guiaAlimentarImages.map((_, index) => (
-                          <button
-                            key={index}
-                            onClick={() => setCurrentSlide(index)}
-                            className={`h-3 w-3 rounded-full transition-all duration-300 ${
-                              index === currentSlide
-                                ? 'bg-pian-red w-8'
-                                : 'bg-gray-300 hover:bg-gray-400'
-                            }`}
-                            aria-label={`Ir para slide ${index + 1}`}
-                          />
-                        ))}
-                      </div>
+                        {/* Navigation Buttons */}
+                        <button
+                          onClick={prevSlide}
+                          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-2 sm:p-3 rounded-full shadow-xl transition-all duration-300 hover:scale-110 z-10 opacity-0 group-hover/carousel:opacity-100 border border-gray-200"
+                          aria-label="Anterior"
+                        >
+                          <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
+                        </button>
 
-                      {/* Counter */}
-                      <div className="text-center mt-4 text-sm text-gray-600 font-barlow-condensed">
-                        Etapa {currentSlide + 1} de {guiaAlimentarImages.length}
+                        <button
+                          onClick={nextSlide}
+                          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-2 sm:p-3 rounded-full shadow-xl transition-all duration-300 hover:scale-110 z-10 opacity-0 group-hover/carousel:opacity-100 border border-gray-200"
+                          aria-label="Próximo"
+                        >
+                          <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
+                        </button>
+
+                        {/* Dots Indicator */}
+                        <div className="flex justify-center gap-2 mt-6">
+                          {guiaAlimentarImages.map((_, index) => (
+                            <button
+                              key={index}
+                              onClick={() => setCurrentSlide(index)}
+                              className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+                                index === currentSlide
+                                  ? 'bg-gray-700 w-8'
+                                  : 'bg-gray-300 hover:bg-gray-400'
+                              }`}
+                              aria-label={`Ir para slide ${index + 1}`}
+                            />
+                          ))}
+                        </div>
+
+                        {/* Counter */}
+                        <div className="text-center mt-4 text-sm text-gray-600 font-barlow-condensed font-semibold">
+                          Etapa {currentSlide + 1} de {guiaAlimentarImages.length}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -476,6 +602,17 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
             </div>
           </div>
         </div>
+
+        {/* Scroll to Top Button */}
+        {showScrollTop && (
+          <button
+            onClick={scrollToTop}
+            className="fixed bottom-6 right-6 z-30 p-3 bg-gray-600 hover:bg-gray-700 text-white rounded-full shadow-lg transition-all duration-300 hover:scale-110 animate-slide-up"
+            aria-label="Voltar ao topo"
+          >
+            <ChevronUp className="h-5 w-5 sm:h-6 sm:w-6" />
+          </button>
+        )}
       </div>
     </div>
   );

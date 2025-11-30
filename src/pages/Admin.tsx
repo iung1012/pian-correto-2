@@ -107,27 +107,28 @@ const Admin = () => {
   return (
     <div className="min-h-screen bg-gray-50 pt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white shadow-sm border-2 border-gray-200 mb-8 p-6">
-          <div className="flex justify-between items-center mb-6">
+        {/* Header */}
+        <div className="bg-white border border-gray-200 rounded-lg shadow-sm mb-8 p-6 lg:p-8">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-6 mb-8">
             <div>
-              <h1 className="text-4xl font-black text-pian-black font-barlow-condensed uppercase">
+              <h1 className="text-3xl lg:text-4xl font-black text-gray-900 mb-2 font-barlow-condensed uppercase tracking-wider">
                 Painel Admin
               </h1>
-              <p className="text-gray-600 mt-2 font-barlow-condensed">
+              <p className="text-gray-600 font-barlow-condensed">
                 Gerencie o catálogo de produtos
               </p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               <Link
                 to="/admin/update-nutrition"
-                className="flex items-center gap-2 px-6 py-3 bg-pian-yellow text-pian-black font-bold font-barlow-condensed hover:bg-pian-yellow-dark transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-pian-yellow text-pian-black rounded-lg hover:bg-yellow-500 transition-colors font-bold font-barlow-condensed"
               >
                 <FileText className="h-5 w-5" />
                 Atualizar Nutrição
               </Link>
               <button
                 onClick={handleAdd}
-                className="flex items-center gap-2 px-6 py-3 bg-pian-red text-white font-bold font-barlow-condensed hover:bg-red-700 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-pian-red text-white rounded-lg hover:bg-red-700 transition-colors font-bold font-barlow-condensed"
               >
                 <Plus className="h-5 w-5" />
                 Novo Produto
@@ -135,51 +136,53 @@ const Admin = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <div className="bg-gray-50 p-4 border-l-4 border-pian-red">
-              <div className="text-sm text-gray-600 font-barlow-condensed">Total</div>
-              <div className="text-2xl font-black text-pian-black font-barlow-condensed">{stats.total}</div>
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div className="bg-gray-50 p-4 rounded-lg border-l-4 border-pian-red">
+              <div className="text-sm text-gray-600 font-barlow-condensed mb-1">Total</div>
+              <div className="text-2xl font-black text-gray-900 font-barlow-condensed">{stats.total}</div>
             </div>
-            <div className="bg-gray-50 p-4 border-l-4 border-blue-500">
-              <div className="text-sm text-gray-600 font-barlow-condensed">Standard</div>
-              <div className="text-2xl font-black text-pian-black font-barlow-condensed">{stats.standard}</div>
+            <div className="bg-gray-50 p-4 rounded-lg border-l-4 border-blue-500">
+              <div className="text-sm text-gray-600 font-barlow-condensed mb-1">Standard</div>
+              <div className="text-2xl font-black text-gray-900 font-barlow-condensed">{stats.standard}</div>
             </div>
-            <div className="bg-gray-50 p-4 border-l-4 border-orange-500">
-              <div className="text-sm text-gray-600 font-barlow-condensed">Premium</div>
-              <div className="text-2xl font-black text-pian-black font-barlow-condensed">{stats.premium}</div>
+            <div className="bg-gray-50 p-4 rounded-lg border-l-4 border-orange-500">
+              <div className="text-sm text-gray-600 font-barlow-condensed mb-1">Premium</div>
+              <div className="text-2xl font-black text-gray-900 font-barlow-condensed">{stats.premium}</div>
             </div>
-            <div className="bg-gray-50 p-4 border-l-4 border-purple-500">
-              <div className="text-sm text-gray-600 font-barlow-condensed">Premium Especial</div>
-              <div className="text-2xl font-black text-pian-black font-barlow-condensed">{stats.premiumEspecial}</div>
+            <div className="bg-gray-50 p-4 rounded-lg border-l-4 border-purple-500">
+              <div className="text-sm text-gray-600 font-barlow-condensed mb-1">Premium Especial</div>
+              <div className="text-2xl font-black text-gray-900 font-barlow-condensed">{stats.premiumEspecial}</div>
             </div>
-            <div className="bg-gray-50 p-4 border-l-4 border-yellow-500">
-              <div className="text-sm text-gray-600 font-barlow-condensed">Super Premium</div>
-              <div className="text-2xl font-black text-pian-black font-barlow-condensed">{stats.superPremium}</div>
+            <div className="bg-gray-50 p-4 rounded-lg border-l-4 border-yellow-500">
+              <div className="text-sm text-gray-600 font-barlow-condensed mb-1">Super Premium</div>
+              <div className="text-2xl font-black text-gray-900 font-barlow-condensed">{stats.superPremium}</div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white shadow-sm border-2 border-gray-200 p-6">
+        {/* Filters and Table */}
+        <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <input
                 type="text"
                 placeholder="Pesquisar produtos..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 text-pian-black focus:outline-none focus:ring-2 focus:ring-pian-red focus:border-pian-red font-barlow-condensed"
+                className="w-full pl-12 pr-4 py-3 bg-white border-2 border-gray-300 rounded-lg text-gray-900 focus:outline-none focus:border-pian-red transition-colors font-barlow-condensed"
               />
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {classifications.map(classification => (
                 <button
                   key={classification}
                   onClick={() => setSelectedCategory(classification)}
-                  className={`px-4 py-3 font-bold font-barlow-condensed border-2 transition-colors ${
+                  className={`px-4 py-3 rounded-lg font-bold font-barlow-condensed border-2 transition-colors ${
                     selectedCategory === classification
                       ? 'bg-pian-red text-white border-pian-red'
-                      : 'bg-white text-pian-black border-gray-200 hover:border-pian-red'
+                      : 'bg-white text-gray-700 border-gray-300 hover:border-pian-red'
                   }`}
                 >
                   {classification}
@@ -207,13 +210,13 @@ const Admin = () => {
               <table className="w-full">
                 <thead>
                   <tr className="border-b-2 border-gray-200">
-                    <th className="text-left py-4 px-4 font-black text-pian-black font-barlow-condensed uppercase">Imagem</th>
-                    <th className="text-left py-4 px-4 font-black text-pian-black font-barlow-condensed uppercase">Nome</th>
-                    <th className="text-left py-4 px-4 font-black text-pian-black font-barlow-condensed uppercase">Animal</th>
-                    <th className="text-left py-4 px-4 font-black text-pian-black font-barlow-condensed uppercase">Tipo</th>
-                    <th className="text-left py-4 px-4 font-black text-pian-black font-barlow-condensed uppercase">Classificação</th>
-                    <th className="text-left py-4 px-4 font-black text-pian-black font-barlow-condensed uppercase">Linha</th>
-                    <th className="text-right py-4 px-4 font-black text-pian-black font-barlow-condensed uppercase">Ações</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-900 font-barlow-condensed uppercase text-sm">Imagem</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-900 font-barlow-condensed uppercase text-sm">Nome</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-900 font-barlow-condensed uppercase text-sm">Animal</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-900 font-barlow-condensed uppercase text-sm">Tipo</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-900 font-barlow-condensed uppercase text-sm">Classificação</th>
+                    <th className="text-left py-4 px-4 font-black text-gray-900 font-barlow-condensed uppercase text-sm">Linha</th>
+                    <th className="text-right py-4 px-4 font-black text-gray-900 font-barlow-condensed uppercase text-sm">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -223,34 +226,34 @@ const Admin = () => {
                         <img
                           src={product.image}
                           alt={product.name}
-                          className="w-16 h-16 object-cover border-2 border-gray-200"
+                          className="w-16 h-16 object-cover rounded-lg border border-gray-200"
                           onError={(e) => {
                             e.currentTarget.src = '/fallback-product.svg';
                           }}
                         />
                       </td>
                       <td className="py-4 px-4">
-                        <div className="font-bold text-pian-black font-barlow-condensed">{product.name}</div>
-                        <div className="text-sm text-gray-600 font-barlow-condensed">{product.description}</div>
+                        <div className="font-bold text-gray-900 font-barlow-condensed">{product.name}</div>
+                        <div className="text-sm text-gray-600 font-barlow-condensed line-clamp-1">{product.description}</div>
                       </td>
                       <td className="py-4 px-4">
-                        <span className="px-3 py-1 bg-blue-100 text-blue-800 font-bold font-barlow-condensed text-sm">
+                        <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-lg font-bold font-barlow-condensed text-sm">
                           {product.category}
                         </span>
                       </td>
                       <td className="py-4 px-4">
-                        <span className="px-3 py-1 bg-purple-100 text-purple-800 font-bold font-barlow-condensed text-sm">
+                        <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 rounded-lg font-bold font-barlow-condensed text-sm">
                           {product.type}
                         </span>
                       </td>
                       <td className="py-4 px-4">
-                        <span className="px-3 py-1 bg-orange-100 text-orange-800 font-bold font-barlow-condensed text-sm">
+                        <span className="inline-block px-3 py-1 bg-orange-100 text-orange-800 rounded-lg font-bold font-barlow-condensed text-sm">
                           {product.classification || 'Standard'}
                         </span>
                       </td>
                       <td className="py-4 px-4">
                         {product.line ? (
-                          <span className="px-3 py-1 bg-green-100 text-green-800 font-bold font-barlow-condensed text-sm">
+                          <span className="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-lg font-bold font-barlow-condensed text-sm">
                             {product.line}
                           </span>
                         ) : (
@@ -261,14 +264,14 @@ const Admin = () => {
                         <div className="flex justify-end gap-2">
                           <button
                             onClick={() => handleEdit(product)}
-                            className="p-2 text-blue-600 hover:bg-blue-50 border-2 border-blue-600 transition-colors"
+                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg border-2 border-blue-600 transition-colors"
                             title="Editar"
                           >
                             <Edit className="h-5 w-5" />
                           </button>
                           <button
                             onClick={() => setDeleteProduct(product)}
-                            className="p-2 text-red-600 hover:bg-red-50 border-2 border-red-600 transition-colors"
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg border-2 border-red-600 transition-colors"
                             title="Excluir"
                           >
                             <Trash2 className="h-5 w-5" />
@@ -301,11 +304,11 @@ const Admin = () => {
       )}
 
       {toast && (
-        <div className="fixed bottom-8 right-8 z-50 animate-in fade-in slide-in-from-bottom-5">
-          <div className={`px-6 py-4 shadow-lg border-2 ${
+        <div className="fixed bottom-8 right-8 z-50 animate-fade-in-up">
+          <div className={`px-6 py-4 rounded-lg shadow-lg border ${
             toast.type === 'success'
-              ? 'bg-green-50 border-green-500 text-green-800'
-              : 'bg-red-50 border-red-500 text-red-800'
+              ? 'bg-green-50 border-green-200 text-green-800'
+              : 'bg-red-50 border-red-200 text-red-800'
           }`}>
             <p className="font-bold font-barlow-condensed">{toast.message}</p>
           </div>

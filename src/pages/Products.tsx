@@ -22,9 +22,7 @@ const Products = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
             {/* Main title */}
-            <h1 className="text-[75px] font-black text-white mb-4 font-barlow-condensed uppercase tracking-wider">
-            </h1>
-            <h1 className="text-[95px] font-black text-white mb-4 font-barlow-condensed uppercase tracking-wider">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[95px] font-black text-white mb-4 font-barlow-condensed uppercase tracking-wider break-words px-2">
               PRODUTOS
             </h1>
             

@@ -56,7 +56,7 @@ const InteractiveMap = () => {
         <div className="text-center mb-16">
           <div className="flex items-center justify-center mb-6">
             <Globe className="h-12 w-12 text-pian-yellow mr-4 animate-spin" style={{ animationDuration: '10s' }} />
-            <h2 className="text-[75px] font-black text-white font-barlow-condensed uppercase tracking-wider">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[75px] font-black text-white font-barlow-condensed uppercase tracking-wider break-words px-2">
               Presença Internacional
             </h2>
           </div>

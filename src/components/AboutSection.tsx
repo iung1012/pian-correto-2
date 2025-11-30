@@ -154,9 +154,7 @@ const AboutSection = () => {
           }}
         >
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-[45px] font-black text-gray-900 mb-4 sm:mb-6 leading-tight font-barlow-condensed uppercase tracking-wider">
-            </h2>
-            <h2 className="text-[75px] font-black text-gray-900 mb-4 sm:mb-6 leading-tight font-barlow-condensed uppercase tracking-wider">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[75px] font-black text-gray-900 mb-4 sm:mb-6 leading-tight font-barlow-condensed uppercase tracking-wider break-words px-2">
               NUTRIÇÃO RESPONSÁVEL, INOVAÇÃO E CARINHO.
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-pian-yellow to-pian-yellow-dark rounded-full mx-auto mb-6"></div>

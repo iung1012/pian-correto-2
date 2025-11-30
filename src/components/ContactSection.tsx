@@ -33,8 +33,7 @@ const ContactSection = () => {
     <section id="contact" className="py-20 section-white section-divider">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-[45px] font-bold text-gray-900 mb-4 font-barlow-condensed uppercase tracking-wider">
-          <h2 className="text-[75px] font-black text-gray-900 mb-4 font-barlow-condensed uppercase tracking-wider">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[75px] font-black text-gray-900 mb-4 font-barlow-condensed uppercase tracking-wider break-words px-2">
             ENTRE EM CONTATO
           </h2>
           <p className="text-xl text-gray-800 max-w-2xl mx-auto font-montserrat font-bold">
@@ -120,7 +119,7 @@ const ContactSection = () => {
           {/* Contact Information */}
           <div className="space-y-8">
             <div className="bg-gray-900 rounded-2xl p-8 shadow-lg border border-pian-yellow">
-              <h2 className="text-[45px] font-black text-white mb-6 font-barlow-condensed uppercase tracking-wider">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[45px] font-black text-white mb-6 font-barlow-condensed uppercase tracking-wider break-words px-2">
                 INFORMAÇÕES DE CONTATO
               </h2>
               

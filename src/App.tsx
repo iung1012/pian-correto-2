@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
@@ -18,15 +17,16 @@ import SocialDemo from './pages/SocialDemo';
 import NavbarDemo from './pages/NavbarDemo';
 import GradientMenuDemo from './pages/GradientMenuDemo';
 import WhatsAppButton from './components/WhatsAppButton';
+import PWAUpdatePrompt from './components/PWAUpdatePrompt';
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <ScrollToTop />
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white overflow-x-hidden w-full max-w-full">
           <Header />
-          <main>
+          <main className="overflow-x-hidden w-full max-w-full">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -58,6 +58,7 @@ function App() {
           </main>
           <Footer />
           <WhatsAppButton />
+          <PWAUpdatePrompt />
         </div>
       </AuthProvider>
     </Router>

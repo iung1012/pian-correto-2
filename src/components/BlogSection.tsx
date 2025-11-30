@@ -651,7 +651,7 @@ const BlogSection = () => {
     <section id="blog" className="py-20 section-gray-light section-divider">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
-          <h2 className="text-[75px] font-black text-white font-barlow-condensed uppercase tracking-wider">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[75px] font-black text-white font-barlow-condensed uppercase tracking-wider break-words px-2">
             BLOG
           </h2>
         </div>

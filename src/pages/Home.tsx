@@ -16,7 +16,7 @@ const Home = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Texto */}
             <div className="space-y-6 order-2 lg:order-1">
-              <h2 className="text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed leading-tight uppercase tracking-wider">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed leading-tight uppercase tracking-wider break-words">
                 DA NOSSA FAMÍLIA PARA A SUA
               </h2>
               <div className="w-20 h-1 bg-gradient-to-r from-pian-red to-pian-red rounded-full mb-6"></div>
@@ -75,7 +75,7 @@ const Home = () => {
       <section className="py-12 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-[45px] font-bold text-gray-900 font-barlow-condensed leading-tight px-4 tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[45px] font-bold text-gray-900 font-barlow-condensed leading-tight px-2 sm:px-4 tracking-tight break-words">
               NA PIAN, COLOCAMOS AMOR NO QUE CRIAMOS E TRABALHAMOS COM <span className="inline-block relative overflow-hidden">
                <span className="text-red-600 typewriter-changing-word"></span>
               </span><br />
@@ -106,7 +106,7 @@ const Home = () => {
       <section className="py-16 bg-white section-divider">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h2 className="text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed leading-tight uppercase tracking-wider">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed leading-tight uppercase tracking-wider break-words px-2">
               QUAL ALIMENTO VOCÊ PROCURA?
             </h2>
           </div>
