@@ -1,4 +1,18 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+// Detecta automaticamente se está em produção (Netlify) ou desenvolvimento
+const getApiUrl = () => {
+  // Se VITE_API_URL estiver definido, usa ele
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  // Em produção (Netlify), usa as rotas relativas que serão redirecionadas
+  if (import.meta.env.PROD) {
+    return '';
+  }
+  // Em desenvolvimento, usa o servidor local
+  return 'http://localhost:3001';
+};
+
+const API_URL = getApiUrl();
 
 export interface ProductOption {
   id: string;

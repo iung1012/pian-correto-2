@@ -60,14 +60,31 @@ Após o deploy, verifique:
 - Verifique a conexão com a internet
 - Considere migrar para Supabase Storage ou outro CDN
 
+## ✅ Netlify Functions Configuradas
+
+O projeto foi configurado com **Netlify Functions** para substituir o servidor Express:
+
+- ✅ `admin-login` - Autenticação admin (`POST /api/admin/login`)
+- ✅ `admin-check` - Verificação de status admin (`GET /api/admin/check/:userId`)
+- ✅ `product-options` - Gerenciamento de opções (`GET/POST/PUT/DELETE /api/product-options/:type`)
+
+**As functions estão prontas e configuradas!** Veja detalhes em:
+- 📖 **[NETLIFY_FUNCTIONS_SETUP.md](./NETLIFY_FUNCTIONS_SETUP.md)** - Guia completo de configuração
+
+### ⚠️ IMPORTANTE: Banco de Dados
+
+O projeto usa **SQLite** com Prisma, que pode ter limitações em ambiente serverless. Considere migrar para PostgreSQL (Supabase) para produção. Veja mais detalhes no guia de setup das functions.
+
 ## 📝 Notas Importantes
 
 - ⚠️ As credenciais do Supabase estão hardcoded como fallback no código
 - ⚠️ Para produção, sempre use variáveis de ambiente
 - ✅ O site está configurado para funcionar mesmo sem variáveis (usando fallback)
+- ⚠️ O servidor Express precisa ser hospedado separadamente ou convertido para Netlify Functions
 
 ## 🔗 Links Úteis
 
 - [Documentação Netlify](https://docs.netlify.com/)
 - [Netlify Environment Variables](https://docs.netlify.com/environment-variables/overview/)
+- [Netlify Functions](https://docs.netlify.com/functions/overview/)
 

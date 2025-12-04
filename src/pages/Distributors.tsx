@@ -1,23 +1,53 @@
 import React from 'react';
-import DistributorsSection from '../components/DistributorsSection';
-import { Lock, ExternalLink, Shield, Users, MapPin, Eye, EyeOff } from 'lucide-react';
+import { Lock, ExternalLink, Eye, EyeOff } from 'lucide-react';
 
 const Distributors = () => {
   const [showPasswordModal, setShowPasswordModal] = React.useState(false);
   const [password, setPassword] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   const [error, setError] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
 
-  const handlePasswordSubmit = (e: React.FormEvent) => {
+  // Detecta automaticamente a URL da API
+  const getApiUrl = () => {
+    if (import.meta.env.VITE_API_URL) {
+      return import.meta.env.VITE_API_URL;
+    }
+    if (import.meta.env.PROD) {
+      return '';
+    }
+    return 'http://localhost:3001';
+  };
+
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
 
-    if (password === 'PianAlimentos') {
-      window.open('https://drive.google.com/drive/folders/1zyncMGhLEvO1nc2Z7_VakWunZwy2wTD-?usp=sharing', '_blank');
-      setShowPasswordModal(false);
-      setPassword('');
-      setError('');
-    } else {
-      setError('Senha incorreta. Tente novamente.');
+    try {
+      const API_URL = getApiUrl();
+      const response = await fetch(`${API_URL}/api/distributor/verify`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        window.open('https://drive.google.com/drive/folders/1zyncMGhLEvO1nc2Z7_VakWunZwy2wTD-?usp=sharing', '_blank');
+        setShowPasswordModal(false);
+        setPassword('');
+      } else {
+        setError('Senha incorreta. Tente novamente.');
+      }
+    } catch (error) {
+      console.error('Error verifying password:', error);
+      setError('Erro ao verificar senha. Tente novamente.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -143,9 +173,10 @@ const Distributors = () => {
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 px-6 py-3 bg-pian-yellow text-pian-black rounded-lg hover:bg-yellow-500 transition-colors font-bold font-barlow-condensed"
+                    disabled={loading}
+                    className="flex-1 px-6 py-3 bg-pian-yellow text-pian-black rounded-lg hover:bg-yellow-500 transition-colors font-bold font-barlow-condensed disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    Acessar
+                    {loading ? 'Verificando...' : 'Acessar'}
                   </button>
                 </div>
               </form>

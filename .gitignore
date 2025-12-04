@@ -24,4 +24,16 @@ dist-ssr
 *.sw?
 .env
 
+# Database
+*.db
+*.db-journal
+prisma/dev.db
+prisma/prisma/dev.db
+dev.db
+
+# Generated
 /generated/prisma
+
+# Build artifacts
+dev-dist
+*.timestamp-*
