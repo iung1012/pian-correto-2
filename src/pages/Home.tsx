@@ -1,5 +1,3 @@
-import React from 'react';
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import HeroBanner from '../components/HeroBanner';
 import ProductLineCarousel from '../components/ProductLineCarousel';
@@ -120,68 +118,32 @@ const Home = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-center justify-center">
             {/* Botão Gatos */}
             <Link
               to="/products?category=Gatos"
-              className="group relative overflow-hidden transition-all duration-500 transform hover:scale-105 hover:shadow-2xl bg-white"
+              className="group relative overflow-hidden transition-all duration-500 transform hover:scale-105 bg-white"
             >
-              <div className="relative p-8 flex flex-col items-center text-center bg-white">
-                {/* High contrast background */}
-
-                {/* Image container */}
-                <div className="relative z-10 mb-6">
-                  <img
-                    src="https://i.postimg.cc/RZNfbz6r/gato.png"
-                    alt="Produtos para Gatos"
-                    className="w-48 h-48 object-contain mx-auto"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="relative z-10">
-                  <h3 className="text-2xl font-black text-gray-900 mb-3 font-barlow-condensed uppercase tracking-wider">
-                    GATOS
-                  </h3>
-                  <div className="inline-flex items-center px-6 py-3 bg-pian-yellow text-pian-black hover:bg-pian-yellow-dark transition-all duration-300 font-bold font-montserrat">
-                    <span className="font-bold font-barlow-condensed uppercase">VER PRODUTOS</span>
-                    <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                </div>
+              <div className="relative p-12 flex items-center justify-center bg-white">
+                <img
+                  src="/IMG_3137.PNG"
+                  alt="Produtos para Gatos"
+                  className="w-96 h-96 md:w-[420px] md:h-[420px] lg:w-[440px] lg:h-[440px] object-contain mx-auto transition-transform duration-300 group-hover:scale-105"
+                />
               </div>
             </Link>
 
             {/* Botão Cães */}
             <Link
               to="/products?category=Cachorros"
-              className="group relative overflow-hidden transition-all duration-500 transform hover:scale-105 hover:shadow-2xl bg-white"
+              className="group relative overflow-hidden transition-all duration-500 transform hover:scale-105 bg-white"
             >
-              <div className="relative p-8 flex flex-col items-center text-center bg-white">
-                {/* High contrast background */}
-
-                {/* Image container */}
-                <div className="relative z-10 mb-6">
-                  <img
-                    src="https://i.postimg.cc/jd8PXjjQ/cachorro.png"
-                    alt="Produtos para Cães"
-                    className="w-48 h-48 object-contain mx-auto"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="relative z-10">
-                  <h3 className="text-2xl font-black text-gray-900 mb-3 font-barlow-condensed uppercase tracking-wider">
-                    CÃES
-                  </h3>
-                  <div className="inline-flex items-center px-6 py-3 bg-pian-yellow hover:bg-pian-yellow-dark text-pian-black transition-all duration-300 font-bold font-montserrat">
-                    <span className="font-bold font-barlow-condensed uppercase">VER PRODUTOS</span>
-                    <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
-                </div>
+              <div className="relative p-12 flex items-center justify-center bg-white">
+                <img
+                  src="/IMG_3138.PNG"
+                  alt="Produtos para Cães"
+                  className="w-96 h-96 md:w-[420px] md:h-[420px] lg:w-[440px] lg:h-[440px] object-contain mx-auto transition-transform duration-300 group-hover:scale-105"
+                />
               </div>
             </Link>
           </div>
