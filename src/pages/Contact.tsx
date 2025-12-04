@@ -41,29 +41,42 @@ const Contact = () => {
       title: 'TELEFONE',
       content: '(54) 3477-1054',
       link: 'tel:+555434771054',
-      color: 'bg-blue-500'
+      color: 'bg-pian-yellow'
     },
     {
       icon: Mail,
       title: 'E-MAIL',
       content: 'pian@pian.com.br',
       link: 'mailto:pian@pian.com.br',
-      color: 'bg-pian-red'
+      color: 'bg-pian-yellow'
     },
     {
       icon: MapPin,
       title: 'ENDEREÇO',
       content: 'RS-324, 1369\nParaí - RS, 95360-000',
       link: 'https://maps.google.com/?q=RS-324,+1369,+Paraí+-+RS,+95360-000',
-      color: 'bg-green-500'
+      color: 'bg-pian-yellow'
     }
   ];
 
   return (
-    <div className="pt-16">
+    <div>
       {/* Hero Section */}
-      <section className="py-20 bg-pian-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-20 relative overflow-hidden">
+        {/* Background com imagem desfocada */}
+        <div className="absolute inset-0">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-110"
+            style={{
+              backgroundImage: 'url(/banner-produtos-background.jpg)',
+              filter: 'blur(2px)',
+            }}
+          ></div>
+          {/* Overlay escuro para contraste */}
+          <div className="absolute inset-0 bg-pian-black/40"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 font-barlow-condensed uppercase tracking-wider break-words px-2">
               CONTATO
@@ -197,7 +210,7 @@ const Contact = () => {
                         <div className="bg-white rounded-lg p-5 border border-gray-200 hover:border-pian-yellow transition-colors">
                           <div className="flex items-start gap-4">
                             <div className={`flex-shrink-0 w-10 h-10 ${info.color} rounded-lg flex items-center justify-center`}>
-                              <Icon className="h-5 w-5 text-white" />
+                              <Icon className="h-5 w-5 text-pian-black" />
                             </div>
                             
                             <div className="flex-1 min-w-0">

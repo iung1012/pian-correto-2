@@ -28,16 +28,20 @@ const Distributors = () => {
   };
 
   return (
-    <div className="pt-16">
+    <div>
       {/* Hero Section */}
-      <section className="py-16 bg-pian-black relative overflow-hidden">
-        {/* Subtle background pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 25% 25%, #FDD528 2px, transparent 2px),
-                             radial-gradient(circle at 75% 75%, #FDD528 1px, transparent 1px)`,
-            backgroundSize: '50px 50px'
-          }}></div>
+      <section className="py-16 relative overflow-hidden">
+        {/* Background com imagem desfocada */}
+        <div className="absolute inset-0">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-110"
+            style={{
+              backgroundImage: 'url(/banner-produtos-background.jpg)',
+              filter: 'blur(2px)',
+            }}
+          ></div>
+          {/* Overlay escuro para contraste */}
+          <div className="absolute inset-0 bg-pian-black/40"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

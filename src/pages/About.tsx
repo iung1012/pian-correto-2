@@ -148,6 +148,15 @@ const About = () => {
 
       {/* Bloco 2: Crescimento e Inovação */}
 
+      {/* Banner Presente e Futuro */}
+      <section className="w-full overflow-hidden">
+        <img
+          src="/banner-presente-futuro.png"
+          alt="Banner Presente e Futuro"
+          className="w-full h-auto object-cover"
+        />
+      </section>
+
       {/* Bloco 3: Presente e Futuro */}
       <section className="py-16 section-yellow-light section-divider">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -182,15 +191,6 @@ const About = () => {
                 Da nossa família para a sua.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Nossos Valores */}
-      <section className="py-16 section-gray-light section-divider">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[75px] font-black text-gray-900 mb-6 font-barlow-condensed uppercase tracking-wider break-words px-2">Nossos Valores</h2>
           </div>
         </div>
       </section>

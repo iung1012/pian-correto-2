@@ -1,10 +1,17 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
-import { User, Session } from '@supabase/supabase-js';
+import { loginAdmin, checkAdminStatus } from '../lib/admin-api';
+
+interface AdminUserContext {
+  id: string;
+  email: string;
+  fullName: string | null;
+  createdAt: Date;
+  lastLogin: Date | null;
+}
 
 interface AuthContextType {
-  user: User | null;
-  session: Session | null;
+  user: AdminUserContext | null;
+  session: { userId: string } | null;
   isAdmin: boolean;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
@@ -13,76 +20,97 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const STORAGE_KEY = 'pian_admin_session';
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<AdminUserContext | null>(null);
+  const [session, setSession] = useState<{ userId: string } | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      (async () => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          await checkAdminStatus(session.user.id);
-        }
+    // Verifica se há sessão salva
+    const savedSession = localStorage.getItem(STORAGE_KEY);
+    if (savedSession) {
+      try {
+        const sessionData = JSON.parse(savedSession);
+        restoreSession(sessionData.userId);
+      } catch (error) {
+        console.error('Error restoring session:', error);
+        localStorage.removeItem(STORAGE_KEY);
         setLoading(false);
-      })();
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      (async () => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          await checkAdminStatus(session.user.id);
-        } else {
-          setIsAdmin(false);
-        }
-      })();
-    });
-
-    return () => subscription.unsubscribe();
+      }
+    } else {
+      setLoading(false);
+    }
   }, []);
 
-  async function checkAdminStatus(userId: string) {
+  async function restoreSession(userId: string) {
     try {
-      const { data, error } = await supabase
-        .from('admin_users')
-        .select('id')
-        .eq('id', userId)
-        .maybeSingle();
-
-      if (!error && data) {
+      const result = await checkAdminStatus(userId);
+      if (result && result.user) {
+        // Converte strings ISO para Date
+        const userData: AdminUserContext = {
+          ...result.user,
+          createdAt: new Date(result.user.createdAt),
+          lastLogin: result.user.lastLogin ? new Date(result.user.lastLogin) : null,
+        };
+        setUser(userData);
+        setSession({ userId: userData.id });
         setIsAdmin(true);
-        await supabase
-          .from('admin_users')
-          .update({ last_login: new Date().toISOString() })
-          .eq('id', userId);
       } else {
+        localStorage.removeItem(STORAGE_KEY);
         setIsAdmin(false);
       }
     } catch (error) {
-      console.error('Error checking admin status:', error);
+      console.error('Error restoring session:', error);
+      localStorage.removeItem(STORAGE_KEY);
       setIsAdmin(false);
+    } finally {
+      setLoading(false);
     }
   }
 
   async function signIn(email: string, password: string) {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      return { error };
+      const result = await loginAdmin(email, password);
+      
+      if ('user' in result) {
+        // Converte strings ISO para Date
+        const userData: AdminUserContext = {
+          ...result.user,
+          createdAt: new Date(result.user.createdAt),
+          lastLogin: result.user.lastLogin ? new Date(result.user.lastLogin) : null,
+        };
+        setUser(userData);
+        setSession({ userId: userData.id });
+        setIsAdmin(true);
+        
+        // Salva sessão no localStorage
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ userId: userData.id }));
+        
+        return { error: null };
+      } else {
+        return { 
+          error: { 
+            message: result.error || 'Email ou senha incorretos' 
+          } 
+        };
+      }
     } catch (error) {
-      return { error };
+      console.error('Error signing in:', error);
+      return { 
+        error: { 
+          message: 'Erro ao fazer login. Tente novamente.' 
+        } 
+      };
     }
   }
 
   async function signOut() {
-    await supabase.auth.signOut();
+    localStorage.removeItem(STORAGE_KEY);
+    setUser(null);
+    setSession(null);
     setIsAdmin(false);
   }
 

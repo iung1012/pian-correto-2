@@ -58,6 +58,15 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Banner Nossos Diferenciais */}
+      <section className="w-full overflow-hidden">
+        <img
+          src="/banner-nossos-diferenciais.png"
+          alt="Nossos diferenciais - Fórmula fechada, Boas práticas de fabricação, Tecnologia e segurança alimentar"
+          className="w-full h-auto object-cover"
+        />
+      </section>
+
       {/* Decorative Divider */}
       <div className="flex items-center justify-center py-8 bg-white">
         <div className="flex items-center gap-4 max-w-md">

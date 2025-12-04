@@ -30,7 +30,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/W1fXQnvy/1984.jpg"
               alt="Início da PIAN em 1984"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/W1fXQnvy/1984.jpg", "Início da PIAN em 1984")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -58,7 +58,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/pd06CH0g/Design-sem-nome-28.png"
               alt="PIAN chega a Porto Alegre"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/pd06CH0g/Design-sem-nome-28.png", "PIAN chega a Porto Alegre")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -86,7 +86,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/d3QRxkL6/1.png"
               alt="Primeiro caminhão baú da PIAN"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/d3QRxkL6/1.png", "Primeiro caminhão baú da PIAN")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -114,7 +114,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/4NdbvcCN/2.png"
               alt="Início da marca Mikdog"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/4NdbvcCN/2.png", "Início da marca Mikdog")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -142,7 +142,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/j5LkkFmC/Design-sem-nome-29.png"
               alt="Construção da fábrica PIAN"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/j5LkkFmC/Design-sem-nome-29.png", "Construção da fábrica PIAN")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -170,7 +170,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/HnMvT7pg/Design-sem-nome-30.png"
               alt="Primeira ampliação e produção de nuggets"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/HnMvT7pg/Design-sem-nome-30.png", "Primeira ampliação e produção de nuggets")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -198,7 +198,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/65NRwrdB/tempImage1WFKzQ.avif"
               alt="Primeira exportação para o Uruguai"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/65NRwrdB/tempImage1WFKzQ.avif", "Primeira exportação para o Uruguai")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -226,7 +226,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/DysmDrqK/tempImagelWomIM.avif"
               alt="Ampliação e extrusora francesa"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/DysmDrqK/tempImagelWomIM.avif", "Ampliação e extrusora francesa")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -254,7 +254,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/RZSHJvp5/tempImageVs3Wqz.avif"
               alt="Linha de enlatados"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/RZSHJvp5/tempImageVs3Wqz.avif", "Linha de enlatados")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -282,7 +282,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/YCrWLtnD/tempImage4zbkG4.avif"
               alt="Segunda ampliação do parque fabril"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/YCrWLtnD/tempImage4zbkG4.avif", "Segunda ampliação do parque fabril")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -310,7 +310,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/Ss3t0Gbd/Design-sem-nome-31.png"
               alt="Linha Priorità Super Premium"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/Ss3t0Gbd/Design-sem-nome-31.png", "Linha Priorità Super Premium")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -338,7 +338,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/2S0B4ggh/tempImageCPuh1g.avif"
               alt="Linha de sachês"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/2S0B4ggh/tempImageCPuh1g.avif", "Linha de sachês")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -366,7 +366,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/zGxRn445/tempImage2NK9Ci.avif"
               alt="Quarta ampliação do parque fabril"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/zGxRn445/tempImage2NK9Ci.avif", "Quarta ampliação do parque fabril")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -394,7 +394,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/qMdn0s8T/tempImageLcLUQq.avif"
               alt="Quinta ampliação do parque fabril"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/qMdn0s8T/tempImageLcLUQq.avif", "Quinta ampliação do parque fabril")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';
@@ -422,7 +422,7 @@ const Timeline = () => {
             <img
               src="https://i.postimg.cc/nLPf1WSj/tempImageX28EAp.avif"
               alt="Novos horizontes e expansão contínua"
-              className="w-full h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-105"
               onClick={() => openImageModal("https://i.postimg.cc/nLPf1WSj/tempImageX28EAp.avif", "Novos horizontes e expansão contínua")}
               onError={(e) => {
                 e.currentTarget.src = 'https://images.pexels.com/photos/1254140/pexels-photo-1254140.jpeg?auto=compress&cs=tinysrgb&w=400';

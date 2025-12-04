@@ -3,20 +3,20 @@ import ProductSection from '../components/ProductSection';
 
 const Products = () => {
   return (
-    <div className="pt-16">
+    <div>
       {/* Hero Section - Clean and Elegant */}
-      <section className="py-16 bg-pian-black relative overflow-hidden">
-        {/* Background com ração transparente */}
-        <div className="absolute inset-0 opacity-20">
+      <section className="py-16 relative overflow-hidden">
+        {/* Background com imagem desfocada */}
+        <div className="absolute inset-0">
           <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-110"
             style={{
-              backgroundImage: 'url(/racao-transparente.png)',
-              backgroundSize: 'contain',
-              backgroundPosition: 'center',
-              opacity: 0.3
+              backgroundImage: 'url(/banner-produtos-background.jpg)',
+              filter: 'blur(2px)',
             }}
           ></div>
+          {/* Overlay escuro para contraste */}
+          <div className="absolute inset-0 bg-pian-black/40"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

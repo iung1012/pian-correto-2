@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase, Product, ProductInsert } from '../lib/supabase';
 import { X, Loader2, Image as ImageIcon } from 'lucide-react';
+import { getProductOptions, ProductOption } from '../lib/product-options-api';
 
 interface ProductFormProps {
   product: Product | null;
@@ -22,6 +23,45 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [imagePreview, setImagePreview] = useState('');
+  const [categories, setCategories] = useState<ProductOption[]>([]);
+  const [types, setTypes] = useState<ProductOption[]>([]);
+  const [classifications, setClassifications] = useState<ProductOption[]>([]);
+  const [lines, setLines] = useState<ProductOption[]>([]);
+  const [loadingOptions, setLoadingOptions] = useState(true);
+
+  useEffect(() => {
+    async function loadOptions() {
+      setLoadingOptions(true);
+      try {
+        const [cats, typs, classifs, lins] = await Promise.all([
+          getProductOptions('category'),
+          getProductOptions('type'),
+          getProductOptions('classification'),
+          getProductOptions('line'),
+        ]);
+        setCategories(cats);
+        setTypes(typs);
+        setClassifications(classifs);
+        setLines(lins);
+        
+        // Se não há produto sendo editado, define valores padrão
+        if (!product && cats.length > 0) {
+          setFormData(prev => ({ ...prev, category: cats[0].name }));
+        }
+        if (!product && typs.length > 0) {
+          setFormData(prev => ({ ...prev, type: typs[0].name }));
+        }
+        if (!product && classifs.length > 0) {
+          setFormData(prev => ({ ...prev, classification: classifs[0].name }));
+        }
+      } catch (error) {
+        console.error('Error loading options:', error);
+      } finally {
+        setLoadingOptions(false);
+      }
+    }
+    loadOptions();
+  }, []);
 
   useEffect(() => {
     if (product) {
@@ -198,61 +238,99 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSuccess }
                 <label className="block text-sm font-black text-pian-black mb-2 font-barlow-condensed uppercase">
                   Categoria (Animal) *
                 </label>
-                <select
-                  value={formData.category}
-                  onChange={(e) => handleChange('category', e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-200 focus:outline-none focus:border-pian-red font-barlow-condensed"
-                >
-                  <option value="Cães">Cães</option>
-                  <option value="Gatos">Gatos</option>
-                  <option value="Peixes">Peixes</option>
-                </select>
+                {loadingOptions ? (
+                  <div className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50 flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
+                    <span className="text-gray-500 font-barlow-condensed">Carregando...</span>
+                  </div>
+                ) : (
+                  <select
+                    value={formData.category}
+                    onChange={(e) => handleChange('category', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-gray-200 focus:outline-none focus:border-pian-red font-barlow-condensed"
+                  >
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.name}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
 
               <div>
                 <label className="block text-sm font-black text-pian-black mb-2 font-barlow-condensed uppercase">
                   Tipo de Produto *
                 </label>
-                <select
-                  value={formData.type}
-                  onChange={(e) => handleChange('type', e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-200 focus:outline-none focus:border-pian-red font-barlow-condensed"
-                >
-                  <option value="Ração Seca">Ração Seca</option>
-                  <option value="Alimento Úmido">Alimento Úmido</option>
-                  <option value="Snack">Snack</option>
-                </select>
+                {loadingOptions ? (
+                  <div className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50 flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
+                    <span className="text-gray-500 font-barlow-condensed">Carregando...</span>
+                  </div>
+                ) : (
+                  <select
+                    value={formData.type}
+                    onChange={(e) => handleChange('type', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-gray-200 focus:outline-none focus:border-pian-red font-barlow-condensed"
+                  >
+                    {types.map((type) => (
+                      <option key={type.id} value={type.name}>
+                        {type.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
 
               <div>
                 <label className="block text-sm font-black text-pian-black mb-2 font-barlow-condensed uppercase">
                   Classificação *
                 </label>
-                <select
-                  value={formData.classification}
-                  onChange={(e) => handleChange('classification', e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-200 focus:outline-none focus:border-pian-red font-barlow-condensed"
-                >
-                  <option value="Standard">Standard</option>
-                  <option value="Premium">Premium</option>
-                  <option value="Premium Especial">Premium Especial</option>
-                  <option value="Super Premium">Super Premium</option>
-                </select>
+                {loadingOptions ? (
+                  <div className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50 flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
+                    <span className="text-gray-500 font-barlow-condensed">Carregando...</span>
+                  </div>
+                ) : (
+                  <select
+                    value={formData.classification}
+                    onChange={(e) => handleChange('classification', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-gray-200 focus:outline-none focus:border-pian-red font-barlow-condensed"
+                  >
+                    {classifications.map((classif) => (
+                      <option key={classif.id} value={classif.name}>
+                        {classif.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
 
               <div>
                 <label className="block text-sm font-black text-pian-black mb-2 font-barlow-condensed uppercase">
                   Linha (Opcional)
                 </label>
-                <input
-                  type="text"
-                  value={formData.line}
-                  onChange={(e) => handleChange('line', e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-200 focus:outline-none focus:border-pian-red font-barlow-condensed"
-                  placeholder="Ex: Mikdog, Mikcat, Prioritá, Dog E Dogs"
-                />
+                {loadingOptions ? (
+                  <div className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-gray-50 flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
+                    <span className="text-gray-500 font-barlow-condensed">Carregando...</span>
+                  </div>
+                ) : (
+                  <select
+                    value={formData.line || ''}
+                    onChange={(e) => handleChange('line', e.target.value)}
+                    className="w-full px-4 py-3 border-2 border-gray-200 focus:outline-none focus:border-pian-red font-barlow-condensed"
+                  >
+                    <option value="">Nenhuma linha</option>
+                    {lines.map((line) => (
+                      <option key={line.id} value={line.name}>
+                        {line.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
                 <p className="mt-1 text-sm text-gray-500 font-barlow-condensed">
-                  Nome da marca/linha do produto
+                  Selecione uma linha ou deixe em branco
                 </p>
               </div>
 
