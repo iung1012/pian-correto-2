@@ -77,10 +77,27 @@ export const handler: Handler = async (event, context) => {
         lastLogin: admin.lastLogin?.toISOString() || null,
       },
     }, {}, requestOrigin);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in login:', error);
+    
+    // Log detalhado para debug
+    if (error.message) {
+      console.error('Error message:', error.message);
+    }
+    if (error.stack) {
+      console.error('Error stack:', error.stack);
+    }
+    
+    // Mensagem mais específica para erros de banco de dados
+    const errorMessage = error.message || 'Erro desconhecido';
+    if (errorMessage.includes('SQLite') || errorMessage.includes('ENOENT') || errorMessage.includes('database')) {
+      console.error('⚠️ ERRO DE BANCO DE DADOS: SQLite não funciona em ambiente serverless do Netlify.');
+      console.error('💡 SOLUÇÃO: Migre para PostgreSQL (Supabase). Veja TROUBLESHOOTING_ADMIN_NETLIFY.md');
+    }
+    
     return createResponse(500, {
       error: 'Erro ao processar requisição',
+      details: process.env.NODE_ENV === 'development' ? errorMessage : undefined,
     }, {}, requestOrigin);
   }
 };

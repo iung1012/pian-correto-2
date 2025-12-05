@@ -15,7 +15,10 @@
     "verify-nutrition": "tsx scripts/verify-nutrition.ts",
     "check-product": "tsx scripts/check-product.ts",
     "seed-admin": "tsx scripts/seed-admin.ts",
-    "seed-options": "tsx scripts/seed-product-options.ts"
+    "seed-admin-postgres": "tsx scripts/create-admin-postgres.ts",
+    "seed-options": "tsx scripts/seed-product-options.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
