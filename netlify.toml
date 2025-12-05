@@ -3,30 +3,35 @@
   publish = "dist"
   functions = "netlify/functions"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-# Redirects para Netlify Functions
+# Redirects para Netlify Functions (DEVEM VIR ANTES do redirect geral)
 [[redirects]]
   from = "/api/admin/login"
   to = "/.netlify/functions/admin-login"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/api/admin/check/*"
   to = "/.netlify/functions/admin-check/:splat"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/api/product-options/*"
   to = "/.netlify/functions/product-options/:splat"
   status = 200
+  force = true
 
 [[redirects]]
   from = "/api/distributor/verify"
   to = "/.netlify/functions/distributor-password"
+  status = 200
+  force = true
+
+# Redirect geral para SPA (deve vir por último)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
   status = 200
 
 [build.environment]
